@@ -5,26 +5,26 @@ on:
      branches: [ master ]
      types: [ closed ]
 
-env:
-  PROJECT: tofu-hansol
-  BACKEND: tofu-backend
-  FRONTEND: tofu-frontend
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Application Run
         uses: appleboy/ssh-action@master
+        env:
+          PROJECT: tofu-hansol
+          TOFU_BACKEND: tofu-backend
+          TOFU_FRONTEND: tofu-frontend
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          envs: env.PROJECT, env.BACKEND, env.FRONTEND
+          envs: PROJECT, TOFU_BACKEND, TOFU_FRONTEND
           script: |
-            cd ~/${{ env.PROJECT }}/${{ env.BACKEND }}
+            echo $PROJECT
+            echo $TOFU_BACKEND
+            cd ~/$PROJECT/$TOFU_BACKEND
             git fetch -a
             git checkout master
             git pull
