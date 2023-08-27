@@ -23,13 +23,21 @@ jobs:
           envs: PROJECT, TOFU_BACKEND, TOFU_FRONTEND
           script: |
             echo $PROJECT
+            echo $PROJECT > result.txt
             echo $TOFU_BACKEND
+            echo $TOFU_FRONTEND >> result.txt
             cd ~/$PROJECT/$TOFU_BACKEND
+            echo "1" >> result.txt
             git fetch -a
+            echo "2" >> result.txt
             git checkout master
+            echo "3" >> result.txt
             git pull
+            echo "4" >> result.txt
             cd docker
+            echo "5" >> result.txt
             echo '${{ secrets.DOCKERHUB_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+            echo "6" >> result.txt
             sudo docker rm -f $(docker ps -q -a)
             docker-compose pull
             docker-compose up -d
