@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          envs: env.PROJECT
+          envs: env.PROJECT, env.BACKEND, env.FRONTEND
           script: |
             cd ~/${{ env.PROJECT }}/${{ env.BACKEND }}
             git fetch -a
