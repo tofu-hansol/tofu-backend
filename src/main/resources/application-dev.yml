@@ -2,6 +2,3 @@ spring:
   config:
     activate:
       on-profile: dev
-  profiles:
-    include:
-      - secret
