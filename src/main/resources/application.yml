@@ -1,0 +1,66 @@
+server:
+  port: 9090
+  servlet:
+    encoding:
+      force-response: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  profiles:
+    default: local
+    include:
+      - secret
+
+  jackson:
+    time-zone: Asia/Seoul
+
+  datasource:
+    url: ENC(9dEkSf0ZDPZKeLaeHGyKD88Jf7bviwijYGNbPabkpSVIMfFhqAOJoSaP6MBs3znM5fNFB+hE0azU3yZLnyZRaoPg1U5JAP/BQK/lYE6bWXiOA2+KHacwo0G7pEw2qnLT4ZSoamndPiiDmtUapTiDpzV11so4TI8Z8T2sfXyvUcQ=)
+    username: ENC(58VwAilsBQ2g4AUynqshLq9lpe5mvTqaSiSFYhIqWJWhkgze8LKqDxKO7JHuLBRA)
+    password: ENC(UteSlrTD3pIegTLJpw3mZFVo1M7qNhKoILcVC95xARHKcnjl+hzy226Xig8PCaLN)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    token:
+      host: 127.0.0.1
+      port: 6379
+
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    open-in-view: false
+
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
+
+# p6spy
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+#oauth2:
+#  client:
+#    kakao:
+#      client-id: ENC(3iVaxf+71Eq8Iq2VclE351wzXwnz+MvVxaCAnLTQYZ4k/WeofW9l6LIxmGndx1iA1p+ALMemTmDcC8mHn1AEqKJnjvItQ7F2R5kABavZOzs=)
+#      client-secret: ENC(caqSGl7DBfA+iisiuBYXVDM++j0f02TTnsXyrY/PPTyqL70JKmboffLaOd5g8gPorBzHnK7PZs6yHcmw6B0VlE5vWoS/8BVLIZDBf2fofqs=)
+#      callback-url: http://localhost:9000/auth/login
+
+jwt:
+  secret-key: ENC(PiGhL/pWJ2+a7B3vYdkOn4+xs+etvKW5oSYBdByJ0+HdCD55AklhR0k4XFg/xWBTZCouwyHwqFho9YdjTnBhDwZffgFyRT4hKXP/7g2cFrzpySxH5+UQPLaEQSYO43t6/qWY3mmZCRysYoMW0L/0hw==)

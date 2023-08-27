@@ -1,0 +1,38 @@
+name: tofu-hansol CD
+
+on:
+   pull_request:
+     branches: [ master ]
+     types: [ closed ]
+
+env:
+  PROJECT: tofu-hansol
+  BACKEND: tofu-backend
+  FRONTEND: tofu-frontend
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Application Run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          password: ${{ secrets.SERVER_SSH_PASSWORD }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          envs: env.PROJECT
+          script: |
+            cd ~/${{ env.PROJECT }}/${{ env.BACKEND }}
+            git fetch -a
+            git checkout master
+            git pull
+            cd docker
+            echo '${{ secrets.DOCKERHUB_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+            sudo docker rm -f $(docker ps -q -a)
+            docker-compose pull
+            docker-compose up -d
+            docker image prune -f
+            
+

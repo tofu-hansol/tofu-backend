@@ -142,6 +142,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-application-secret.yml
-
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,intellij+all
+
+## custom
+application-secret.yml
