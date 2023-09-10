@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.7'
 
 services:
 #  redis-token:
@@ -17,6 +17,12 @@ services:
 #      - redis-token
     ports:
       - "9090:9090"
+
+  tofu-frontend:
+    image: phj0860/tofu-frontend:latest
+    restart: on-failure
+    ports:
+      - "3000:3000"
 
   tofu-mysql:
     image: mysql:8.0.25
