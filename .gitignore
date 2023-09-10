@@ -146,3 +146,4 @@ gradle-app.setting
 
 ## custom
 application-secret.yml
+src/main/generated/**

@@ -55,12 +55,5 @@ decorator:
     p6spy:
       enable-logging: true
 
-#oauth2:
-#  client:
-#    kakao:
-#      client-id: ENC(3iVaxf+71Eq8Iq2VclE351wzXwnz+MvVxaCAnLTQYZ4k/WeofW9l6LIxmGndx1iA1p+ALMemTmDcC8mHn1AEqKJnjvItQ7F2R5kABavZOzs=)
-#      client-secret: ENC(caqSGl7DBfA+iisiuBYXVDM++j0f02TTnsXyrY/PPTyqL70JKmboffLaOd5g8gPorBzHnK7PZs6yHcmw6B0VlE5vWoS/8BVLIZDBf2fofqs=)
-#      callback-url: http://localhost:9000/auth/login
-
 jwt:
   secret-key: ENC(PiGhL/pWJ2+a7B3vYdkOn4+xs+etvKW5oSYBdByJ0+HdCD55AklhR0k4XFg/xWBTZCouwyHwqFho9YdjTnBhDwZffgFyRT4hKXP/7g2cFrzpySxH5+UQPLaEQSYO43t6/qWY3mmZCRysYoMW0L/0hw==)

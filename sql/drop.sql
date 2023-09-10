@@ -1,0 +1,13 @@
+drop table comment;
+drop table club_photo;
+drop table board;
+drop table applicant;
+drop table club_schedule;
+drop table club_member;
+drop table budget;
+drop table club;
+drop table category;
+drop table notification;
+drop table member;
+drop table dept;
+drop table company;
