@@ -1,7 +1,7 @@
 CREATE TABLE company (
      id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
      name	varchar(50)	NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE dept (
@@ -10,27 +10,26 @@ CREATE TABLE dept (
       company_id	int unsigned	NOT NULL,
       constraint fk_dept_company
           foreign key (company_id) references company (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE member (
       id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
       email	varchar(100)	NOT NULL,
       password	TEXT	NOT NULL,
-      join_date	date	NOT NULL,
-      nickname	varchar(100)	NOT NULL,
+      name	varchar(100)	NOT NULL,
       role	varchar(25)	NULL	DEFAULT 'ROLE_USER' COMMENT 'ROLE_USER, ROLE_ADMIN',
       profile_url	TEXT	NULL,
       created_at   datetime                       not null default CURRENT_TIMESTAMP,
       updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-      status	varchar(25)	NOT NULL	DEFAULT 'ACTIVATED' COMMENT 'ACTIVATED, DORMANT, DELETED',
+      status	varchar(25)	NOT NULL	DEFAULT 'ACTIVATE' COMMENT 'ACTIVATE, DORMANT, DELETED',
       dept_id	int unsigned	NOT NULL,
       position	varchar(50)	NULL,
       mbti	char(4)	NULL,
 
       constraint fk_member_dept
       foreign key (dept_id) references dept (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE notification (
       id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -41,12 +40,12 @@ CREATE TABLE notification (
 
       constraint fk_notification_member
       foreign key (member_id) references member (id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE category (
       id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
       name	VARCHAR(255)	NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE club (
         id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -63,7 +62,7 @@ CREATE TABLE club (
 
         constraint fk_club_category
             foreign key (category_id) references category (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE budget (
         id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -77,7 +76,7 @@ CREATE TABLE budget (
 
         constraint fk_budget_club
             foreign key (club_id) references club (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE club_member (
          id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -91,7 +90,7 @@ CREATE TABLE club_member (
                 foreign key (member_id) references member (id),
             constraint fk_club_member_club
                 foreign key (club_id) references club (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE club_schedule (
        id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -105,7 +104,7 @@ CREATE TABLE club_schedule (
 
        constraint fk_club_schedule_club
               foreign key (club_id) references club (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE applicant (
@@ -119,7 +118,7 @@ CREATE TABLE applicant (
                foreign key (club_schedule_id) references club_schedule (id),
        constraint fk_applicant_member
               foreign key (member_id) references member (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE board (
          id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -135,7 +134,7 @@ CREATE TABLE board (
              foreign key (member_id) references member (id),
          constraint fk_board_club
              foreign key (club_id) references club (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE club_photo (
         id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -147,7 +146,7 @@ CREATE TABLE club_photo (
 
         constraint fk_club_photo_board
             foreign key (board_id) references board (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE comment (
            id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -159,7 +158,7 @@ CREATE TABLE comment (
 
            constraint fk_comment_board
              foreign key (board_id) references board (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 

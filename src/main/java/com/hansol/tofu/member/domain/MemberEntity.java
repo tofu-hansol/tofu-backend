@@ -1,72 +1,56 @@
 package com.hansol.tofu.member.domain;
 
-import java.util.Objects;
-
+import com.hansol.tofu.dept.domain.DeptEntity;
 import com.hansol.tofu.global.TimeEntity;
 import com.hansol.tofu.member.enums.MemberStatus;
 import com.hansol.tofu.member.enums.UserRole;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Builder
+@DynamicInsert
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class MemberEntity extends TimeEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	@Column(nullable = false)
-	private String email;
+    @Column(nullable = false)
+    private String email;
 
-	@Column(nullable = false)
-	private String password;
+    @Column(nullable = false)
+    private String password;
 
-	@Column(nullable = false)
-	private Integer career;
+    @Column(name = "profile_url")
+    private String profileUrl;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false)
-	private MemberStatus memberStatus;
+    private String position;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "user_role")
-	private UserRole userRole;
+    private String mbti;
 
-	@PrePersist
-	public void prePersist() {
-		this.memberStatus = Objects.isNull(this.memberStatus) ? MemberStatus.ACTIVATE : this.memberStatus;
-		this.userRole = Objects.isNull(this.userRole) ? UserRole.ROLE_USER : this.userRole;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    @ColumnDefault("ACTIVATE")
+    private MemberStatus memberStatus;
 
-	private MemberEntity(Long id, String name, String email, String password, Integer career, MemberStatus memberStatus,
-		UserRole userRole) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.career = career;
-		this.memberStatus = memberStatus;
-		this.userRole = userRole;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    @ColumnDefault("ROLE_USER")
+    private UserRole userRole;
+
+    @JoinColumn(name = "dept_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private DeptEntity dept;
+
 }
