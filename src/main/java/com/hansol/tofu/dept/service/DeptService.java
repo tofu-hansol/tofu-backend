@@ -16,7 +16,7 @@ public class DeptService {
 
     private final DeptRepository deptRepository;
 
-    public List<DeptResponseDTO> getDepts() {
-        return deptRepository.findAll().stream().map(DeptResponseDTO::toDTO).collect(Collectors.toList());
+    public List<DeptResponseDTO> getDepts(Long companyId) {
+        return deptRepository.findByCompanyId(companyId).stream().map(DeptResponseDTO::toDTO).collect(Collectors.toList());
     }
 }
