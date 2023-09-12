@@ -92,6 +92,8 @@ CREATE TABLE club_member (
                 foreign key (club_id) references club (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE member ADD UNIQUE KEY unique_member_email(email);
+
 CREATE TABLE club_schedule (
        id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
        event_at	datetime	NOT NULL,
