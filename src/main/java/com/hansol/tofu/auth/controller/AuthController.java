@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.hansol.tofu.auth.AuthService;
@@ -25,10 +26,11 @@ public class AuthController {
 
 	@Operation(summary = "회원가입 API", responses = {
 		@ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "400", description = "요청값 에러", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 		@ApiResponse(responseCode = "409", description = "존재하는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
 	@PostMapping("/signup")
-	public BaseHttpResponse<Long> signup(@RequestBody SignupRequestDTO signupRequestDTO) {
+	public BaseHttpResponse<Long> signup(@RequestBody @Valid SignupRequestDTO signupRequestDTO) {
 		return BaseHttpResponse.success(authService.signup(signupRequestDTO));
 	}
 
