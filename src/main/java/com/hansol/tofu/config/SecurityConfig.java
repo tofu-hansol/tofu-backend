@@ -2,6 +2,10 @@ package com.hansol.tofu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,16 +46,51 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring()
-			.requestMatchers("/api/**", "/favicon.ico", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
+			.requestMatchers("/api/auth/**", "/favicon.ico", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
+	}
+
+	// https://docs.spring.io/spring-security/reference/servlet/authorization/architecture.html
+	@Bean
+	public RoleHierarchyImpl roleHierarchy() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+		return roleHierarchy;
+	}
+
+	// TODO: Method Security (@GlobalMethodSecurity) deprecated -> 다른 방법 찾을 것
+	@Bean
+	public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+		expressionHandler.setRoleHierarchy(roleHierarchy);
+		return expressionHandler;
 	}
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf((csrf) -> csrf.disable()).cors((cors) -> cors.disable());
+
+		/*
+			TODO: 추후 제거
+			[구체적인 경로가 먼저 앞에 오며 그 뒤에는 그것보다 더 큰 범위의 경로가 온다]
+			permitAll : 무조건 접근 허용
+			anyRequest : 이외 요청에 대해
+			authenticated : 인증된 사용자만 가능
+
+			hasRole : 사용자 객체에 주어진 "ROLE_" prefix로 시작하는 권한
+			hasAuthority : 사용자 객체에 주어진 권한
+			--> 둘 차이는 앞에 "ROLE_" prefix가 붙는지 여부
+
+			hasAnyRole : 사용자 객체에 주어진 "ROLE_" prefix로 시작하는 권한 중 하나라도 있는지 확인
+			hasAnyAuthority : 사용자 객체에 주어진 권한 중 하나라도 있는지 확인
+		 */
 		http.authorizeHttpRequests(
-			(authorize) -> authorize.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**",
-				"/swagger-ui.html").permitAll().anyRequest().authenticated());
+			(authorize) -> authorize
+					.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+					.requestMatchers("/api/admin/**").hasRole("ADMIN")
+					.requestMatchers("/api/clubs").hasAuthority("CLUB")
+					.anyRequest().authenticated()
+		);
 
 		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
 				UsernamePasswordAuthenticationFilter.class)
