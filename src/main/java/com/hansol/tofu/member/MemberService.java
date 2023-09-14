@@ -5,6 +5,7 @@ import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.domain.MemberEntity;
 import com.hansol.tofu.member.domain.MemberRequestDTO;
+import com.hansol.tofu.member.enums.MemberStatus;
 import com.hansol.tofu.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,11 @@ public class MemberService {
 
 	@Transactional(readOnly = true)
 	public Optional<MemberEntity> findMemberBy(String email) {
+		return memberRepository.findMemberByEmail(email);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<MemberEntity> findMemberBy(String email, MemberStatus status) {
 		return memberRepository.findMemberByEmailAndMemberStatus(email, ACTIVATE);
 	}
 
