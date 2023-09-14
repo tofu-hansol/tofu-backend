@@ -12,7 +12,7 @@ public record SignupRequestDTO(
         // TODO: 추후 서비스 오픈 시 한솔 이메일만 들어올 수 있도록 변경
         // @Email(regexp = "^[a-zA-Z0-9._%+-]+@hansol\\.com$", message = "한솔그룹 이메일만 가능합니다")
         @Schema(description = "이메일")
-        @Email
+        @Email(message = "이메일 형식이 올바르지 않습니다.")
         String email,
 
         @Schema(description = "비밀번호")

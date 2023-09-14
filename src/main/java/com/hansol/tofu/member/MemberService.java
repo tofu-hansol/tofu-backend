@@ -29,13 +29,13 @@ public class MemberService {
 	private final DeptRepository deptRepository;
 
 	@Transactional(readOnly = true)
-	public Optional<MemberEntity> findMemberBy(String email, MemberStatus status) {
-		return memberRepository.findMemberByEmailAndMemberStatus(email, status);
+	public Optional<MemberEntity> findMemberBy(String email) {
+		return memberRepository.findMemberByEmail(email);
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<MemberEntity> findMemberBy(String email) {
-		return memberRepository.findMemberByEmail(email);
+	public Optional<MemberEntity> findMemberBy(String email, MemberStatus status) {
+		return memberRepository.findMemberByEmailAndMemberStatus(email, ACTIVATE);
 	}
 
 	public String getCurrentMemberEmail() {
