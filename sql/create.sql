@@ -22,7 +22,7 @@ CREATE TABLE member (
       profile_url	TEXT	NULL,
       created_at   datetime                       not null default CURRENT_TIMESTAMP,
       updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-      status	varchar(25)	NOT NULL	DEFAULT 'ACTIVATE' COMMENT 'ACTIVATE, DORMANT, DELETED',
+      status	varchar(25)	NOT NULL	DEFAULT 'DORMANT' COMMENT 'ACTIVATE, DORMANT, DELETED',
       dept_id	int unsigned	NOT NULL,
       position	varchar(50)	NULL,
       mbti	char(4)	NULL,

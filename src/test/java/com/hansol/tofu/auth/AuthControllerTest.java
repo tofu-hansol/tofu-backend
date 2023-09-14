@@ -1,8 +1,8 @@
-package com.hansol.tofu.auth.controller;
+package com.hansol.tofu.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.hansol.tofu.auth.AuthService;
+import com.hansol.tofu.auth.controller.AuthController;
 import com.hansol.tofu.auth.domain.dto.SignupRequestDTO;
 import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
 import com.hansol.tofu.error.BaseException;
@@ -18,7 +18,6 @@ import static com.hansol.tofu.error.ErrorCode.INVALID_TOKEN;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

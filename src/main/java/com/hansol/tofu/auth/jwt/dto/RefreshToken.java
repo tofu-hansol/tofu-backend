@@ -1,18 +1,19 @@
 package com.hansol.tofu.auth.jwt.dto;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import static com.hansol.tofu.auth.jwt.JwtTokenProvider.REFRESH_TOKEN_TIMEOUT;
 
 @Getter
 @Builder
-@RedisHash("refresh")
+@RedisHash(value = "refresh", timeToLive = REFRESH_TOKEN_TIMEOUT)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RefreshToken {
 
