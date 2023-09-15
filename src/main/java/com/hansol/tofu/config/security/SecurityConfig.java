@@ -1,4 +1,4 @@
-package com.hansol.tofu.config;
+package com.hansol.tofu.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.hansol.tofu.auth.CustomUserDetailsService;
-import com.hansol.tofu.auth.jwt.JwtAccessDeniedHandler;
-import com.hansol.tofu.auth.jwt.JwtAuthenticationEntryPoint;
-import com.hansol.tofu.auth.jwt.JwtAuthenticationFilter;
-import com.hansol.tofu.auth.jwt.JwtTokenProvider;
+import com.hansol.tofu.auth.filter.jwt.JwtAccessDeniedHandler;
+import com.hansol.tofu.auth.filter.jwt.JwtAuthenticationEntryPoint;
+import com.hansol.tofu.auth.filter.jwt.JwtAuthenticationFilter;
+import com.hansol.tofu.auth.filter.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,15 +51,14 @@ public class SecurityConfig {
 
 	// https://docs.spring.io/spring-security/reference/servlet/authorization/architecture.html
 	@Bean
-	public RoleHierarchyImpl roleHierarchy() {
+	static RoleHierarchyImpl roleHierarchy() {
 		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
 		roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
 		return roleHierarchy;
 	}
 
-	// TODO: Method Security (@GlobalMethodSecurity) deprecated -> 다른 방법 찾을 것
 	@Bean
-	public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+	static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
 		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
 		expressionHandler.setRoleHierarchy(roleHierarchy);
 		return expressionHandler;

@@ -4,7 +4,7 @@ import com.hansol.tofu.auth.AuthService;
 import com.hansol.tofu.auth.domain.dto.LoginRequestDTO;
 import com.hansol.tofu.auth.domain.dto.LoginResponseDTO;
 import com.hansol.tofu.auth.domain.dto.SignupRequestDTO;
-import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
+import com.hansol.tofu.auth.filter.jwt.dto.JwtTokenDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

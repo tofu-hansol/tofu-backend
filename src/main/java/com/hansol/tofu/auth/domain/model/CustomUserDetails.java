@@ -1,6 +1,6 @@
 package com.hansol.tofu.auth.domain.model;
 
-import com.hansol.tofu.club.domain.dto.ClubAuth;
+import com.hansol.tofu.club.enums.ClubRole;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
@@ -18,14 +19,17 @@ public class CustomUserDetails implements UserDetails {
 
 	private String email;
 	private String password;
-	private List<String> roles;
-	private List<ClubAuth> clubAuthList;
 
-	public CustomUserDetails(String email, String password, List<String> roles, List<ClubAuth> clubAuthList) {
+	private Long memberId;
+	private List<String> roles;
+	private Map<Long, ClubRole> clubAuthorizationMap;
+
+	public CustomUserDetails(String email, String password, Long memberId, List<String> roles, Map<Long, ClubRole> clubAuthorizationMap) {
 		this.email = email;
 		this.password = password;
+		this.memberId = memberId;
 		this.roles = roles;
-		this.clubAuthList = clubAuthList;
+		this.clubAuthorizationMap = clubAuthorizationMap;
 	}
 
 	@Override

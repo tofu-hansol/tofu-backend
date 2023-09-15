@@ -1,4 +1,4 @@
-package com.hansol.tofu.auth.jwt;
+package com.hansol.tofu.auth.filter.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.hansol.tofu.auth.filter.jwt.dto.JwtTokenDTO;
+import com.hansol.tofu.auth.filter.jwt.dto.RefreshToken;
+import com.hansol.tofu.auth.filter.jwt.repository.RefreshTokenRedisRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
-import com.hansol.tofu.auth.jwt.dto.RefreshToken;
-import com.hansol.tofu.auth.jwt.repository.RefreshTokenRedisRepository;
 import com.hansol.tofu.member.enums.UserRole;
 
 import io.jsonwebtoken.Claims;

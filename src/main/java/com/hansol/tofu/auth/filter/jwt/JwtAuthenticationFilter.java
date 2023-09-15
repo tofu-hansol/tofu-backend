@@ -1,4 +1,4 @@
-package com.hansol.tofu.auth.jwt;
+package com.hansol.tofu.auth.filter.jwt;
 
 import com.hansol.tofu.auth.CustomUserDetailsService;
 import com.hansol.tofu.error.BaseException;

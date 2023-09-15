@@ -5,14 +5,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Schema(description = "동호회 권한")
-public record ClubAuth(
+public record ClubAuthorization(
 		@Schema(description = "동호회 ID")
 		Long clubId,
 
-		@Schema(description = "동호회 권한", example = "PRESEIDENT")
+		@Schema(description = "동호회 권한", example = "PRESIDENT")
 		ClubRole clubRole
 ) {
 	@Builder
-	public ClubAuth {
+	public ClubAuthorization {
 	}
 }

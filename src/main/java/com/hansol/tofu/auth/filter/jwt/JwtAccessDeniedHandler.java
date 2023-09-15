@@ -1,4 +1,4 @@
-package com.hansol.tofu.auth.jwt;
+package com.hansol.tofu.auth.filter.jwt;
 
 import static com.hansol.tofu.error.ErrorCode.*;
 

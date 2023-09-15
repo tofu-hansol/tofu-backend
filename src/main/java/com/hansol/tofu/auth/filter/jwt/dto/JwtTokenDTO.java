@@ -1,4 +1,4 @@
-package com.hansol.tofu.auth.jwt.dto;
+package com.hansol.tofu.auth.filter.jwt.dto;
 
 import lombok.Builder;
 

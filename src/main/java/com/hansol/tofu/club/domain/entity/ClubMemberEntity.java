@@ -31,7 +31,6 @@ public class ClubMemberEntity extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity member;
 
-
     @JoinColumn(name = "club_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ClubEntity club;
