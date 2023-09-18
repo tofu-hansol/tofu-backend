@@ -1,19 +1,21 @@
 package com.hansol.tofu.member.repository;
 
-import java.util.Optional;
-
+import com.hansol.tofu.member.domain.MemberEntity;
+import com.hansol.tofu.member.enums.MemberStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hansol.tofu.member.domain.MemberEntity;
-import com.hansol.tofu.member.enums.MemberStatus;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
-	Optional<MemberEntity> findMemberByEmailAndMemberStatus(String email, MemberStatus status);
+    Optional<MemberEntity> findMemberByEmail(String email);
 
-	Optional<MemberEntity> findByIdAndMemberStatus(Long id, MemberStatus status);
+    Optional<MemberEntity> findMemberByEmailAndMemberStatus(String email, MemberStatus status);
 
-	boolean existsMemberByEmail(String email);
+
+    Optional<MemberEntity> findByIdAndMemberStatus(Long id, MemberStatus status);
+
+    boolean existsMemberByEmail(String email);
 }

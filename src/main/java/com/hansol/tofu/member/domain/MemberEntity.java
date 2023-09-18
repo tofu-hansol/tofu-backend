@@ -9,6 +9,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import static com.hansol.tofu.member.enums.MemberStatus.*;
+
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @Entity
@@ -41,7 +43,7 @@ public class MemberEntity extends TimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    @ColumnDefault("ACTIVATE")
+    @ColumnDefault("DORMANT")
     private MemberStatus memberStatus;
 
     @Enumerated(EnumType.STRING)
@@ -52,5 +54,9 @@ public class MemberEntity extends TimeEntity {
     @JoinColumn(name = "dept_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private DeptEntity dept;
+
+    public void completeSignUp() {
+        this.memberStatus = ACTIVATE;
+    }
 
 }
