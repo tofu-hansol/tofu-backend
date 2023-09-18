@@ -18,11 +18,11 @@ import lombok.Getter;
 public abstract class TimeEntity {
 
     @CreationTimestamp
-    @Column(name = "created_time")
-    private ZonedDateTime createdTime;
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_time")
-    private ZonedDateTime updatedTime;
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
 }

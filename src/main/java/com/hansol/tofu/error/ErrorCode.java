@@ -12,10 +12,11 @@ public enum ErrorCode {
 
 
 	DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다"),
+	DUPLICATE_MEMBER(HttpStatus.CONFLICT, "이미 존재하는 회원입니다"),
 	ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다"),
 
-	NOT_FOUND_RALLY_PLACE(HttpStatus.NOT_FOUND, "요청하신 랠리 장소 정보를 찾을 수 없습니다"),
-	NOT_FOUND_RALLY_SCHEDULE(HttpStatus.NOT_FOUND, "요청하신 랠리 스케쥴 정보를 찾을 수 없습니다"),
+	NOT_FOUND_DEPT(HttpStatus.NOT_FOUND, "부서정보를 찾을 수 없습니다"),
+	NOT_FOUND_COMPANY(HttpStatus.NOT_FOUND, "회사정보를 찾을 수 없습니다"),
 
 	ALREADY_APPLIED(HttpStatus.BAD_REQUEST, "이미 참여 요청한 랠리 스케쥴입니다"),
 	ALREADY_STARTED(HttpStatus.BAD_REQUEST, "이미 시작한 랠리 스케쥴입니다"),

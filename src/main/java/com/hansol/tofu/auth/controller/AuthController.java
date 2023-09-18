@@ -1,9 +1,12 @@
 package com.hansol.tofu.auth.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.hansol.tofu.auth.domain.dto.SignupRequestDTO;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import com.hansol.tofu.auth.AuthService;
 import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
@@ -20,33 +23,23 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
 	private final AuthService authService;
-	// private final KakaoOAuthProperties kakaoOAuthProperties;
 
-	// @GetMapping("/kakao")
-	// @Operation(summary = "카카오 로그인 페이지 요청 API")
-	// public void requestKakaoLoginPage(HttpServletResponse response) {
-	//
-	// 	StringBuilder url = new StringBuilder("https://kauth.kakao.com/oauth/authorize?");
-	// 	url.append("client_id=").append(kakaoOAuthProperties.getClientId());
-	// 	url.append("&redirect_uri=").append(kakaoOAuthProperties.getCallbackUrl());
-	// 	url.append("&response_type=code");
-	//
-	// 	try {
-	// 		response.sendRedirect(url.toString());
-	// 	} catch (IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-	// }
-	//
-	// @GetMapping("/login")
-	// @Operation(summary = "카카오 로그인 API")
-	// public BaseHttpResponse<LoginResponseDTO> login(@RequestParam String kakaoAccessToken) {
-	// 	var loginResponseDTO = authService.kakaoLogin(kakaoAccessToken);
-	// 	return BaseHttpResponse.success(loginResponseDTO);
-	// }
+	@Operation(summary = "회원가입 API", responses = {
+		@ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "400", description = "요청값 에러", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+		@ApiResponse(responseCode = "409", description = "존재하는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@PostMapping("/signup")
+	public BaseHttpResponse<Long> signup(@RequestBody @Valid SignupRequestDTO signupRequestDTO) {
+		return BaseHttpResponse.success(authService.signup(signupRequestDTO));
+	}
 
+	@Operation(summary = "Refresh Token 재발급 API", responses = {
+		@ApiResponse(responseCode = "200", description = "Refresh Token 재발급 성공", content = @Content(schema = @Schema(implementation = JwtTokenDTO.class))),
+		@ApiResponse(responseCode = "401", description = "Refresh Token 유효하지 않음", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
 	@PostMapping("/refresh")
-	@Operation(summary = "Refresh Token 재발행 API")
 	public BaseHttpResponse<JwtTokenDTO> refresh(@RequestHeader("RefreshToken") String refreshToken) {
 		var loginResponseDTO = authService.refresh(refreshToken);
 		return BaseHttpResponse.success(loginResponseDTO);
