@@ -1,25 +1,26 @@
 package com.hansol.tofu.member;
 
+import static com.hansol.tofu.error.ErrorCode.*;
+import static com.hansol.tofu.member.enums.MemberStatus.*;
+
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
-import com.hansol.tofu.club.domain.dto.ClubAuthorization;
+import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.domain.MemberEntity;
 import com.hansol.tofu.member.domain.MemberRequestDTO;
 import com.hansol.tofu.member.enums.MemberStatus;
 import com.hansol.tofu.member.repository.MemberRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-
-import static com.hansol.tofu.error.ErrorCode.DUPLICATE_MEMBER;
-import static com.hansol.tofu.error.ErrorCode.NOT_FOUND_DEPT;
-import static com.hansol.tofu.member.enums.MemberStatus.ACTIVATE;
 
 @Service
 @Transactional
@@ -39,10 +40,10 @@ public class MemberService {
         return memberRepository.findMemberByEmailAndMemberStatus(email, ACTIVATE);
     }
 
-    public List<ClubAuthorization> getCurrentMemberClubAuthority() {
+    public Map<Long, ClubAuthorizationDTO> getCurrentMemberClubAuthority() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-        return principal.getClubAuthorizationMap();
+        return principal.getClubAuthorizationDTO();
     }
 
 //    public void refreshClubAuthority() {

@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TestService {
 
-    public String president() {
+    public String president(Long clubId) {
         return "president";
     }
 
-    public String manager() {
+    public String manager(Long clubId) {
         return "manager";
     }
 
-    public String member() {
+    public String member(Long clubId) {
         return "member";
     }
 

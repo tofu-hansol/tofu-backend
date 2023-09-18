@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("@clubAuth.decide(#root, T(com.hansol.tofu.club.enums.ClubRole).MANAGER.name())")
+@PreAuthorize("@clubAuth.decide(#root, #cludId, T(com.hansol.tofu.club.enums.ClubRole).MANAGER.name())")
 public @interface IsManager {
 }

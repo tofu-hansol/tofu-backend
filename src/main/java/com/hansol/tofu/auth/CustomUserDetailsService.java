@@ -1,6 +1,7 @@
 package com.hansol.tofu.auth;
 
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
+import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
 import com.hansol.tofu.club.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
@@ -34,7 +35,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 		var clubAuthorizationMap = clubMemberRepository.findAllByMemberId(member.getId()).stream()
 				.collect(Collectors.toMap(
 						clubMember -> clubMember.getClub().getId(),
-						ClubMemberEntity::getClubRole
+						clubMember -> ClubAuthorizationDTO.builder()
+							.clubId(clubMember.getClub().getId())
+							.clubName(clubMember.getClub().getName())
+							.clubRole(clubMember.getClubRole())
+							.build()
 				));
 
 		return new CustomUserDetails(

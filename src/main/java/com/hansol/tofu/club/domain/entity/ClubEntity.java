@@ -35,6 +35,7 @@ public class ClubEntity {
     @Column(name = "account_number")
     private String accountNumber;
 
+	@ColumnDefault("0")
     private int fee;
 
     @Enumerated(EnumType.STRING)

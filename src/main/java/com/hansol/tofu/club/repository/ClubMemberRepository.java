@@ -1,11 +1,10 @@
 package com.hansol.tofu.club.repository;
 
-import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.club.store.ClubMemberQueryStore;
 
-public interface ClubMemberRepository extends JpaRepository<ClubMemberEntity, Long> {
+public interface ClubMemberRepository extends JpaRepository<ClubMemberEntity, Long>, ClubMemberQueryStore {
 
-    List<ClubMemberEntity> findAllByMemberId(Long memberId);
 }
