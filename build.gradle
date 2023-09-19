@@ -98,6 +98,11 @@ dependencies {
 
 	// sendMail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// aws
+	// AWS S3
+	 implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+	 implementation 'com.amazonaws:aws-java-sdk-s3:1.12.111'
 }
 
 tasks.named('test') {

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableFeignClients
 @EnableConfigurationProperties
 @EnableJpaAuditing
-@ConfigurationPropertiesScan(basePackages = {"com.hansol.tofu.config", "com.hansol.tofu.auth"})
+@ConfigurationPropertiesScan(basePackages = {"com.hansol.tofu.config", "com.hansol.tofu.auth", "com.hansol.tofu.upload"})
 @SpringBootApplication
 public class TofuApplication {
 

@@ -27,7 +27,9 @@ public enum ErrorCode {
 	ALREADY_STARTED(HttpStatus.BAD_REQUEST, "이미 시작한 랠리 스케쥴입니다"),
 	EXCEED_MAX_APPLICANT(HttpStatus.BAD_REQUEST, "최대 참여 인원을 초과한 랠리 스케쥴입니다"),
 	PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
-	NOT_ACTIVATE_MEMBER(HttpStatus.BAD_REQUEST, "비활성화된 회원입니다"),;
+	NOT_ACTIVATE_MEMBER(HttpStatus.BAD_REQUEST, "비활성화된 회원입니다"),
+	FAILED_TO_UPLOAD(HttpStatus.INTERNAL_SERVER_ERROR, "업로드에 실패하였습니다"),
+	INVALID_FILETYPE(HttpStatus.INTERNAL_SERVER_ERROR, "파일형식이 잘못되었습니다");
 
 
 	private final HttpStatus httpStatus;
