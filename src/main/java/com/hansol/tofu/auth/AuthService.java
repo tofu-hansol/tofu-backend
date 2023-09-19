@@ -3,8 +3,10 @@ package com.hansol.tofu.auth;
 import com.hansol.tofu.auth.domain.dto.LoginRequestDTO;
 import com.hansol.tofu.auth.domain.dto.LoginResponseDTO;
 import com.hansol.tofu.auth.domain.dto.SignupRequestDTO;
-import com.hansol.tofu.auth.jwt.JwtTokenProvider;
-import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
+import com.hansol.tofu.auth.filter.jwt.JwtTokenProvider;
+import com.hansol.tofu.auth.filter.jwt.dto.JwtTokenDTO;
+import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.club.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.MemberService;
 import com.hansol.tofu.member.domain.MemberRequestDTO;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.hansol.tofu.error.ErrorCode.*;
 import static com.hansol.tofu.member.enums.MemberStatus.ACTIVATE;
@@ -24,9 +28,12 @@ import static com.hansol.tofu.member.enums.MemberStatus.ACTIVATE;
 public class AuthService {
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    // TODO: ClubMemberService 만들어서 풀기
     private final MemberService memberService;
     private final EmailVerificationService emailVerificationService;
     private final PasswordEncoder passwordEncoder;
+    private final ClubMemberRepository clubMemberRepository;
 
     public JwtTokenDTO refresh(String refreshToken) {
 
@@ -87,7 +94,20 @@ public class AuthService {
                 .memberId(memberEntity.getId())
                 .accessToken(jwtTokenDTO.accessToken())
                 .refreshToken(jwtTokenDTO.refreshToken())
+                .clubAuthorizationDTO(getClubAuthorityMap(memberEntity.getId()))
                 .build();
+    }
+
+    private Map<Long, ClubAuthorizationDTO> getClubAuthorityMap(Long memberId) {
+        return clubMemberRepository.findAllByMemberId(memberId).stream()
+                .collect(Collectors.toMap(
+                        clubMember -> clubMember.getClub().getId(),
+                        clubMember -> ClubAuthorizationDTO.builder()
+                                .clubId(clubMember.getClub().getId())
+                                .clubName(clubMember.getClub().getName())
+                                .clubRole(clubMember.getClubRole())
+                                .build()
+                ));
     }
 
 }

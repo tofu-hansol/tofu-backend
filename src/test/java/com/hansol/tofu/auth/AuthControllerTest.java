@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hansol.tofu.auth.controller.AuthController;
 import com.hansol.tofu.auth.domain.dto.SignupRequestDTO;
-import com.hansol.tofu.auth.jwt.dto.JwtTokenDTO;
+import com.hansol.tofu.auth.filter.jwt.dto.JwtTokenDTO;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.error.BaseExceptionHandler;
 import org.hamcrest.Matchers;

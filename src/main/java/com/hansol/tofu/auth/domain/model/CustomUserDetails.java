@@ -2,11 +2,14 @@ package com.hansol.tofu.auth.domain.model;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,12 +21,18 @@ public class CustomUserDetails implements UserDetails {
 
 	private String email;
 	private String password;
-	private List<String> roles;
 
-	public CustomUserDetails(String email, String password, List<String> roles) {
+	private Long memberId;
+	private List<String> roles;
+	private Map<Long, ClubAuthorizationDTO> clubAuthorizationDTO;
+
+	public CustomUserDetails(String email, String password, Long memberId, List<String> roles,
+		Map<Long, ClubAuthorizationDTO> clubAuthorizationDTO) {
 		this.email = email;
 		this.password = password;
+		this.memberId = memberId;
 		this.roles = roles;
+		this.clubAuthorizationDTO = clubAuthorizationDTO;
 	}
 
 	@Override

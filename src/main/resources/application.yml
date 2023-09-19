@@ -71,3 +71,11 @@ decorator:
 
 jwt:
   secret-key: ENC(PiGhL/pWJ2+a7B3vYdkOn4+xs+etvKW5oSYBdByJ0+HdCD55AklhR0k4XFg/xWBTZCouwyHwqFho9YdjTnBhDwZffgFyRT4hKXP/7g2cFrzpySxH5+UQPLaEQSYO43t6/qWY3mmZCRysYoMW0L/0hw==)
+
+ncloud:
+  storage:
+    end-point: https://kr.object.ncloudstorage.com
+    region-name: kr-standard
+    bucket-name: tofu.hansol.bucket
+    access-key: ENC(rVYDEceVPT4rX8SnALyrXaXwvoYWOzmtEdhGoxhvl2HprCMF1223EwFj3gn2n/FORC9Ut4mksEbJySeU7/aIlQ==)
+    secret-key: ENC(Rg1BKkBNj0jevlH7rrV45Woj86GN7G3L/UlqZy3PHBaN+HQElOZJKeRF7sFvdDEvJ648ztzWJu7qBTNRjpVHUV7gRfuKy2axfZI+3ZVXTpE=)

@@ -57,7 +57,7 @@ CREATE TABLE club (
         updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
         status	varchar(25)	NOT NULL	DEFAULT 'DORMANT' COMMENT 'DORMANT, ACTIVATED, DELETED',
         account_number	varchar(45)	NULL,
-        fee	smallint unsigned	NULL,
+        fee	smallint unsigned	NULL DEFAULT '0',
         category_id	int unsigned	NOT NULL,
 
         constraint fk_club_category

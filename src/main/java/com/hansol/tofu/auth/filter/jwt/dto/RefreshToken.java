@@ -1,4 +1,4 @@
-package com.hansol.tofu.auth.jwt.dto;
+package com.hansol.tofu.auth.filter.jwt.dto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
-import static com.hansol.tofu.auth.jwt.JwtTokenProvider.REFRESH_TOKEN_TIMEOUT;
+import static com.hansol.tofu.auth.filter.jwt.JwtTokenProvider.REFRESH_TOKEN_TIMEOUT;
 
 @Getter
 @Builder

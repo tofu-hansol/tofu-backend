@@ -1,32 +1,26 @@
-package com.hansol.tofu.auth.jwt;
-
-import static com.hansol.tofu.error.ErrorCode.*;
-
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.filter.OncePerRequestFilter;
+package com.hansol.tofu.auth.filter.jwt;
 
 import com.hansol.tofu.auth.CustomUserDetailsService;
 import com.hansol.tofu.error.BaseException;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+import static com.hansol.tofu.error.ErrorCode.INVALID_TOKEN;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final CustomUserDetailsService customUserDetailsService;
-
-	@Value("${jwt.secret-key}")
-	private String secretKey = "030605fa79b0bbb71a1cb00f20c160dd93426dc1bbc78881e0e7bbd495a1c0d8b705533c9bd5c1bdae573f5df7489b7b5259f5262ba23a9b59bec17390d3ce81";
 
 	@Override
 	protected void doFilterInternal(
