@@ -2,6 +2,7 @@ package com.hansol.tofu.member.domain;
 
 import com.hansol.tofu.dept.domain.DeptEntity;
 import com.hansol.tofu.global.TimeEntity;
+import com.hansol.tofu.member.domain.dto.MemberEditRequestDTO;
 import com.hansol.tofu.member.enums.MemberStatus;
 import com.hansol.tofu.member.enums.UserRole;
 import jakarta.persistence.*;
@@ -58,5 +59,17 @@ public class MemberEntity extends TimeEntity {
     public void completeSignUp() {
         this.memberStatus = ACTIVATE;
     }
+
+	public void changeMemberProfile(MemberEditRequestDTO req, DeptEntity dept) {
+		this.password = req.password();
+		this.name = req.name();
+		this.position = req.position();
+		this.mbti = req.mbti();
+		this.dept = dept;
+	}
+
+	public void changeProfileImage(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
 
 }

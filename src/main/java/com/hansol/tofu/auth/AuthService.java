@@ -9,7 +9,7 @@ import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.club.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.MemberService;
-import com.hansol.tofu.member.domain.MemberRequestDTO;
+import com.hansol.tofu.member.domain.dto.MemberJoinRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class AuthService {
     }
 
     public Long signup(SignupRequestDTO signupRequestDTO) {
-        var memberRequestDTO = MemberRequestDTO.builder()
+        var memberRequestDTO = MemberJoinRequestDTO.builder()
                 .email(signupRequestDTO.email())
                 .name(signupRequestDTO.name())
                 .password(passwordEncoder.encode(signupRequestDTO.password()))
