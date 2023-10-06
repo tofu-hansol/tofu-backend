@@ -61,7 +61,6 @@ public class MemberEntity extends TimeEntity {
     }
 
 	public void changeMemberProfile(MemberEditRequestDTO req, DeptEntity dept) {
-		this.password = req.password();
 		this.name = req.name();
 		this.position = req.position();
 		this.mbti = req.mbti();

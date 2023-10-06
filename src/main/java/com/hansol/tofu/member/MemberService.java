@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,27 +81,27 @@ public class MemberService {
     }
 
 	public Long editMember(Long memberId, MemberEditRequestDTO memberEditRequestDTO) {
-		// 회원 ID를 통해 회원 엔티티를 가져온다.
 		var memberEntity = memberRepository.findById(memberId)
 				.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
 		var deptEntity = deptRepository.findById(memberEditRequestDTO.deptId())
 				.orElseThrow(() -> new BaseException(NOT_FOUND_DEPT));
 
-		// 회원 엔티티의 change 메서드를 이용하여 정보를 수정한다.
+        // TODO: 비밀번호는 authService 통해서 변경하도록
+//        if(!memberEditRequestDTO.password().isBlank()) {
+//            String encode = passwordEncoder.encode(memberEditRequestDTO.password());
+//        }
+
 		memberEntity.changeMemberProfile(memberEditRequestDTO, deptEntity);
 
 		return memberId;
 	}
 
 	public Long changeMemberProfileImage(Long memberId, MultipartFile profileImage) {
-		// 회원 ID를 통해 회원 엔티티를 가져온다.
 		var memberEntity = memberRepository.findById(memberId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
 		String imageUrl = storageService.uploadImage(profileImage, "images/member/");
-
-		// 회원 엔티티의 change 메서드를 이용하여 정보를 수정한다.
 		memberEntity.changeProfileImage(imageUrl);
 
 		return memberId;

@@ -3,6 +3,7 @@ package com.hansol.tofu.member;
 import com.hansol.tofu.dept.domain.DeptEntity;
 import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
+import com.hansol.tofu.member.domain.MemberEntity;
 import com.hansol.tofu.member.domain.dto.MemberEditRequestDTO;
 import com.hansol.tofu.member.domain.dto.MemberJoinRequestDTO;
 import com.hansol.tofu.member.repository.MemberRepository;
@@ -81,37 +82,44 @@ class MemberServiceTest {
 
 	@Test
 	void editMember_유효하는_정보로_회원정보_수정에_성공한다() {
-		// 비밀번호, 프로필사진, 이름, 회사, 부서, 직급, MBTI
 		var memberEditRequestDTO = MemberEditRequestDTO.builder()
-			.password("test1234")
 			.name("뭉치")
 			.companyId(3L)
 			.deptId(5L)
 			.position("책임")
 			.mbti("ENFJ")
 			.build();
+        Long memberId = 1L;
+        var memberEntity = MemberEntity.builder().id(memberId).build();
+        var deptEntity = DeptEntity.builder().id(memberEditRequestDTO.deptId()).build();
+        when(memberRepository.findById(memberId)).thenReturn(Optional.of(memberEntity));
+        when(deptRepository.findById(memberEditRequestDTO.deptId())).thenReturn(Optional.of(deptEntity));
 
 
-		// 회원정보 수정 요청
-		sut.editMember(1L, memberEditRequestDTO);
-
-		// TODO: 회원정보 수정 요청 성공 확인
+        sut.editMember(memberId, memberEditRequestDTO);
 
 
+        assertEquals(memberEntity.getName(), memberEditRequestDTO.name());
+        assertEquals(memberEntity.getDept().getId(), memberEditRequestDTO.deptId());
+        assertEquals(memberEntity.getPosition(), memberEditRequestDTO.position());
+        assertEquals(memberEntity.getMbti(), memberEditRequestDTO.mbti());
 	}
 
 	@Test
 	void changeMemberProfileImage_유효하는_정보로_회원정보_수정에_성공한다() {
-		// 비밀번호, 프로필사진, 이름, 회사, 부서, 직급, MBTI
 		MockMultipartFile profileImage = new MockMultipartFile("profileImage", "test.jpg", "image/jpeg", "test".getBytes());
+        Long memberId = 1L;
+        var memberEntity = MemberEntity.builder().id(memberId).build();
+
+        when(memberRepository.findById(memberId)).thenReturn(Optional.of(memberEntity));
+        when(storageService.uploadImage(profileImage, "images/member/")).thenReturn("http://image.com/testImage");
 
 
-		// 회원정보 수정 요청
 		sut.changeMemberProfileImage(1L, profileImage);
 
-		// TODO: 회원정보 수정 요청 성공 확인
 
-
+        assertEquals(memberEntity.getProfileUrl(), "http://image.com/testImage");
+        verify(storageService).uploadImage(profileImage, "images/member/");
 	}
 
 
