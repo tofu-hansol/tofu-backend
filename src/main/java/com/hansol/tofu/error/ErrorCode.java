@@ -18,6 +18,7 @@ public enum ErrorCode {
 
 	NOT_FOUND_DEPT(HttpStatus.NOT_FOUND, "부서정보를 찾을 수 없습니다"),
 	NOT_FOUND_COMPANY(HttpStatus.NOT_FOUND, "회사정보를 찾을 수 없습니다"),
+	NOT_FOUND_CATEGORY(HttpStatus.NOT_FOUND, "카테고리 정보를 찾을 수 없습니다"),
 
 
 	FAILED_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송에 실패하였습니다"),

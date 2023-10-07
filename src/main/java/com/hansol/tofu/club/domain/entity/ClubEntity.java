@@ -1,6 +1,6 @@
 package com.hansol.tofu.club.domain.entity;
 
-import com.hansol.tofu.category.domain.entity.CategoryEntity;
+import com.hansol.tofu.category.domain.CategoryEntity;
 import com.hansol.tofu.club.enums.ClubStatus;
 import jakarta.persistence.*;
 import lombok.*;
