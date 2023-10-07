@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Schema(description = "동호회 생성")
-public record ClubRequestDTO(
+public record ClubCreationRequestDTO(
 	String name,
 	String description,
 	String accountNumber,
@@ -15,7 +15,7 @@ public record ClubRequestDTO(
 	Long categoryId
 ) {
 	@Builder
-	public ClubRequestDTO {
+	public ClubCreationRequestDTO {
 	}
 
 	public ClubEntity toEntity(CategoryEntity category) {

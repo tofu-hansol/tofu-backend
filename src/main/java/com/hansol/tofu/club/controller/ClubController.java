@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hansol.tofu.club.ClubService;
-import com.hansol.tofu.club.domain.dto.ClubRequestDTO;
+import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +35,7 @@ public class ClubController {
 		// @ApiResponse(responseCode = "409", description = "존재하는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
 	@PostMapping
-	public BaseHttpResponse<Long> addClub(@RequestBody @Valid ClubRequestDTO clubRequestDTO) {
+	public BaseHttpResponse<Long> addClub(@RequestBody @Valid ClubCreationRequestDTO clubRequestDTO) {
 		return BaseHttpResponse.success(clubService.addClub(clubRequestDTO));
 	}
 }
