@@ -1,5 +1,6 @@
 package com.hansol.tofu.club.domain.entity;
 
+import com.hansol.tofu.club.enums.ClubJoinStatus;
 import com.hansol.tofu.club.enums.ClubRole;
 import com.hansol.tofu.global.TimeEntity;
 import com.hansol.tofu.member.domain.MemberEntity;
@@ -24,7 +25,7 @@ public class ClubMemberEntity extends TimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "club_role", nullable = false)
-    @ColumnDefault("OTHERS")
+    @ColumnDefault("MEMBER")
     private ClubRole clubRole;
 
     @JoinColumn(name = "member_id")
@@ -34,4 +35,9 @@ public class ClubMemberEntity extends TimeEntity {
     @JoinColumn(name = "club_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ClubEntity club;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", nullable = false)
+	@ColumnDefault("WAITING")
+	private ClubJoinStatus clubJoinStatus;
 }

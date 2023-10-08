@@ -11,8 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hansol.tofu.category.repository.CategoryRepository;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
+import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.club.repository.ClubMemberRepository;
 import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.error.BaseException;
+import com.hansol.tofu.global.SecurityUtils;
+import com.hansol.tofu.member.repository.MemberRepository;
 import com.hansol.tofu.upload.image.StorageService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,8 @@ public class ClubService {
 	private final ClubRepository clubRepository;
 	private final CategoryRepository categoryRepository;
 	private final StorageService storageService;
+	private final ClubMemberRepository clubMemberRepository;
+	private final MemberRepository memberRepository;
 
 	public Long addClub(ClubCreationRequestDTO clubRequestDTO) {
 		var categoryEntity = categoryRepository.findById(clubRequestDTO.categoryId())
@@ -64,5 +70,32 @@ public class ClubService {
 
 		return clubId;
 	}
+
+	public Long requestJoinClub(Long clubId) {
+		Long memberId = SecurityUtils.getCurrentUserId();
+		var memberEntity = memberRepository.findById(memberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
+
+		var clubEntity = clubRepository.findById(clubId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
+
+		var clubMemberEntity = ClubMemberEntity.builder()
+			.member(memberEntity)
+			.club(clubEntity)
+			.build();
+
+		return clubMemberRepository.save(clubMemberEntity).getId();
+	}
+
+	public Long cancelJoinClub(Long clubId) {
+		Long memberId = SecurityUtils.getCurrentUserId();
+
+		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
+		clubMemberRepository.deleteById(clubMemberEntity.getId());
+
+		return clubId;
+	}
+
 
 }

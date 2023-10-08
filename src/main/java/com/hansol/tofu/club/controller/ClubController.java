@@ -1,12 +1,18 @@
 package com.hansol.tofu.club.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.club.ClubService;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
+import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,11 +37,55 @@ public class ClubController {
 
 	@Operation(summary = "동호회 생성 요청 API", responses = {
 		@ApiResponse(responseCode = "200", description = "동호회 생성 요청 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		// @ApiResponse(responseCode = "400", description = "요청값 에러", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-		// @ApiResponse(responseCode = "409", description = "존재하는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 카테고리", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
 	@PostMapping
 	public BaseHttpResponse<Long> addClub(@RequestBody @Valid ClubCreationRequestDTO clubRequestDTO) {
 		return BaseHttpResponse.success(clubService.addClub(clubRequestDTO));
+	}
+
+	@Operation(summary = "동호회 수정 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 상세 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 카테고리, 존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@PatchMapping("/{clubId}")
+	public BaseHttpResponse<Long> editClub(@PathVariable Long clubId, @RequestBody @Valid ClubEditRequestDTO clubEditRequestDTO) {
+		return BaseHttpResponse.success(clubService.editClub(clubId, clubEditRequestDTO));
+	}
+
+	@Operation(summary = "동호회 배경사진 변경 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 배경사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@PatchMapping("/{clubId}/background-image")
+	public BaseHttpResponse<Long> changeBackgroundImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile backgroundImage) {
+		return BaseHttpResponse.success(clubService.changeBackgroundImage(clubId, backgroundImage));
+	}
+
+	@Operation(summary = "동호회 프로필사진 변경 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 프로필사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@PatchMapping("/{clubId}/profile-image")
+	public BaseHttpResponse<Long> changeProfileImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile profileImage) {
+		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
+	}
+
+	@Operation(summary = "동호회 가입 신청 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 가입 신청 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@PostMapping("/{clubId}/members")
+	public BaseHttpResponse<Long> requestJoinClub(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(clubService.requestJoinClub(clubId));
+	}
+
+	@Operation(summary = "동호회 가입 신청 취소 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 가입 신청 취소 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@DeleteMapping("/{clubId}/members")
+	public BaseHttpResponse<Long> cancelJoinClub(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(clubService.cancelJoinClub(clubId));
 	}
 }

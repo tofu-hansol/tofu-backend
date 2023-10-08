@@ -22,7 +22,7 @@ CREATE TABLE member (
       profile_url	TEXT	NULL,
       created_at   datetime                       not null default CURRENT_TIMESTAMP,
       updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-      status	varchar(25)	NOT NULL	DEFAULT 'DORMANT' COMMENT 'ACTIVATE, DORMANT, DELETED',
+      status	varchar(25)	NOT NULL	DEFAULT 'PENDING' COMMENT 'ACTIVATE, DORMANT, PENDING',
       dept_id	int unsigned	NOT NULL,
       position	varchar(50)	NULL,
       mbti	char(4)	NULL,
@@ -80,11 +80,12 @@ CREATE TABLE budget (
 
 CREATE TABLE club_member (
          id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
-         club_role	varchar(25)	NOT NULL	DEFAULT 'OTHERS' COMMENT 'PRESIDENT, MANAGER, MEMBER, OTHERS',
+         club_role	varchar(25)	NOT NULL	DEFAULT 'MEMBER' COMMENT 'PRESIDENT, MANAGER, MEMBER',
          member_id	int unsigned	NOT NULL,
          club_id	int unsigned	NOT NULL,
          created_at   datetime                       not null default CURRENT_TIMESTAMP,
          updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+         status varchar(25) NOT NULL DEFAULT 'WAITING' COMMENT 'WAITING, APPROVED, REJECTED',
 
             constraint fk_club_member_member
                 foreign key (member_id) references member (id),
@@ -157,9 +158,12 @@ CREATE TABLE comment (
            updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
            status	varchar(25)	NULL,
            board_id	int unsigned	NOT NULL,
+           member_id int unsigned NOT NULL,
 
            constraint fk_comment_board
-             foreign key (board_id) references board (id)
+             foreign key (board_id) references board (id),
+           constraint fk_comment_member
+             foreign key (member_id) references member (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
