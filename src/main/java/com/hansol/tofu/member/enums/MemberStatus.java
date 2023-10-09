@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public enum MemberStatus {
 
-	ACTIVATE, BLOCKED, DORMANT;
+	ACTIVATE, PENDING, DORMANT;
 }
