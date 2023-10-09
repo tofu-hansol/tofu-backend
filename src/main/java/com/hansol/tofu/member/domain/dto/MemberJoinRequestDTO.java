@@ -1,12 +1,14 @@
-package com.hansol.tofu.member.domain;
+package com.hansol.tofu.member.domain.dto;
 
 import com.hansol.tofu.dept.domain.DeptEntity;
+import com.hansol.tofu.member.domain.MemberEntity;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
 
 @Schema(description = "회원가입 요청 DTO")
-public record MemberRequestDTO(
+public record MemberJoinRequestDTO(
 
         @Schema(description = "이메일")
         @Email(message = "이메일 형식에 맞게 입력해주세요.")
@@ -26,10 +28,10 @@ public record MemberRequestDTO(
 
 ) {
     @Builder
-    public MemberRequestDTO {
+    public MemberJoinRequestDTO {
     }
 
-    public MemberEntity toEntity(MemberRequestDTO memberRequestDTO, DeptEntity dept) {
+    public MemberEntity toEntity(MemberJoinRequestDTO memberRequestDTO, DeptEntity dept) {
         return MemberEntity.builder()
                 .email(memberRequestDTO.email())
                 .password(memberRequestDTO.password())
