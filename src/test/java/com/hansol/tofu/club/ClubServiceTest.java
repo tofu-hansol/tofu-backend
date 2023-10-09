@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import java.util.Collections;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,7 @@ import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.entity.ClubEntity;
 import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.club.enums.ClubJoinStatus;
 import com.hansol.tofu.club.repository.ClubMemberRepository;
 import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.member.domain.MemberEntity;
@@ -171,7 +171,7 @@ class ClubServiceTest {
 
 
 		verify(clubMemberRepository, times(1)).save(clubMemberEntity);
-		Assertions.assertEquals(clubMemberEntityId, 2L);
+		assertEquals(clubMemberEntityId, 2L);
 	}
 
 	@Test
@@ -189,6 +189,54 @@ class ClubServiceTest {
 
 
 		verify(clubMemberRepository, times(1)).deleteById(clubMemberEntity.getId());
-		Assertions.assertEquals(clubMemberEntityId, 1L);
+		assertEquals(clubMemberEntityId, 2L);
+	}
+
+	@Test
+	@WithUserDetails(
+		value = "mchi@test.com",
+		setupBefore = TestExecutionEvent.TEST_EXECUTION
+	)
+	void approveClubJoinRequest_동호회원_가입요청_승인에_성공한다() {
+		var clubMemberId = 1L;
+		var clubEntity = ClubEntity.builder().id(1L).build();
+		var memberEntity = MemberEntity.builder().id(3L).build();
+		var clubMemberEntity = ClubMemberEntity.builder()
+			.id(2L)
+			.club(clubEntity)
+			.member(memberEntity)
+			.build();
+		when(clubMemberRepository.findByClubIdAndMemberId(clubEntity.getId(), memberEntity.getId()))
+			.thenReturn(Optional.of(clubMemberEntity));
+
+
+		sut.acceptJoinClub(clubEntity.getId(), memberEntity.getId());
+
+
+		assertEquals(clubMemberEntity.getClubJoinStatus(), ClubJoinStatus.ACCEPTED);
+	}
+
+	@Test
+	@WithUserDetails(
+		value = "mchi@test.com",
+		setupBefore = TestExecutionEvent.TEST_EXECUTION
+	)
+	void rejectClubJoinRequest_동호회원_가입요청_거절에_성공한다() {
+		var clubMemberId = 1L;
+		var clubEntity = ClubEntity.builder().id(1L).build();
+		var memberEntity = MemberEntity.builder().id(3L).build();
+		var clubMemberEntity = ClubMemberEntity.builder()
+			.id(2L)
+			.club(clubEntity)
+			.member(memberEntity)
+			.build();
+		when(clubMemberRepository.findByClubIdAndMemberId(clubEntity.getId(), memberEntity.getId()))
+			.thenReturn(Optional.of(clubMemberEntity));
+
+
+		sut.rejectJoinClub(clubEntity.getId(), memberEntity.getId());
+
+
+		assertEquals(clubMemberEntity.getClubJoinStatus(), ClubJoinStatus.REJECTED);
 	}
 }

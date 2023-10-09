@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(rollbackFor = SQLException.class)
 public class ClubService {
 
+	// TODO: ClubMemberService 등 따로 회원, 클럽 관련 서비스 분리
 	private final ClubRepository clubRepository;
 	private final CategoryRepository categoryRepository;
 	private final StorageService storageService;
@@ -71,6 +72,7 @@ public class ClubService {
 		return clubId;
 	}
 
+	// TDOO : 요청시 중복된 요청이 있는지 확인 필요
 	public Long requestJoinClub(Long clubId) {
 		Long memberId = SecurityUtils.getCurrentUserId();
 		var memberEntity = memberRepository.findById(memberId)
@@ -94,7 +96,23 @@ public class ClubService {
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
 		clubMemberRepository.deleteById(clubMemberEntity.getId());
 
-		return clubId;
+		return clubMemberEntity.getId();
+	}
+
+	public Long acceptJoinClub(Long clubId, Long memberId) {
+		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
+		clubMemberEntity.accept();
+
+		return clubMemberEntity.getId();
+	}
+
+	public Long rejectJoinClub(Long clubId, Long memberId) {
+		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
+		clubMemberEntity.reject();
+
+		return clubMemberEntity.getId();
 	}
 
 

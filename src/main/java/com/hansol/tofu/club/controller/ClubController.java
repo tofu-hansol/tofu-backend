@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.club.ClubService;
+import com.hansol.tofu.club.annotation.IsPresident;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+// TODO : API 신청 분리 (clubmember, club 분리)
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "club", description = "동호회 API")
 @RestController
@@ -48,6 +50,7 @@ public class ClubController {
 		@ApiResponse(responseCode = "200", description = "동호회 상세 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 카테고리, 존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
+	@IsPresident
 	@PatchMapping("/{clubId}")
 	public BaseHttpResponse<Long> editClub(@PathVariable Long clubId, @RequestBody @Valid ClubEditRequestDTO clubEditRequestDTO) {
 		return BaseHttpResponse.success(clubService.editClub(clubId, clubEditRequestDTO));
@@ -57,6 +60,7 @@ public class ClubController {
 		@ApiResponse(responseCode = "200", description = "동호회 배경사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
+	@IsPresident
 	@PatchMapping("/{clubId}/background-image")
 	public BaseHttpResponse<Long> changeBackgroundImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile backgroundImage) {
 		return BaseHttpResponse.success(clubService.changeBackgroundImage(clubId, backgroundImage));
@@ -66,6 +70,7 @@ public class ClubController {
 		@ApiResponse(responseCode = "200", description = "동호회 프로필사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
+	@IsPresident
 	@PatchMapping("/{clubId}/profile-image")
 	public BaseHttpResponse<Long> changeProfileImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile profileImage) {
 		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
@@ -87,5 +92,26 @@ public class ClubController {
 	@DeleteMapping("/{clubId}/members")
 	public BaseHttpResponse<Long> cancelJoinClub(@PathVariable Long clubId) {
 		return BaseHttpResponse.success(clubService.cancelJoinClub(clubId));
+	}
+
+	@Operation(summary = "동호회 가입 승인 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 가입 승인 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@IsPresident
+	@PatchMapping("/{clubId}/members/{memberId}")
+	public BaseHttpResponse<Long> acceptJoinClub(@PathVariable Long clubId, @PathVariable Long memberId) {
+		return BaseHttpResponse.success(clubService.acceptJoinClub(clubId, memberId));
+	}
+
+	// TODO : 분리 필요
+	@Operation(summary = "동호회 가입 거절 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 가입 거절 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@IsPresident
+	@DeleteMapping("/{clubId}/members/{memberId}")
+	public BaseHttpResponse<Long> rejectJoinClub(@PathVariable Long clubId, @PathVariable Long memberId) {
+		return BaseHttpResponse.success(clubService.rejectJoinClub(clubId, memberId));
 	}
 }

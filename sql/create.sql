@@ -85,7 +85,7 @@ CREATE TABLE club_member (
          club_id	int unsigned	NOT NULL,
          created_at   datetime                       not null default CURRENT_TIMESTAMP,
          updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-         status varchar(25) NOT NULL DEFAULT 'WAITING' COMMENT 'WAITING, APPROVED, REJECTED',
+         status varchar(25) NOT NULL DEFAULT 'WAITING' COMMENT 'WAITING, ACCEPTED, REJECTED',
 
             constraint fk_club_member_member
                 foreign key (member_id) references member (id),

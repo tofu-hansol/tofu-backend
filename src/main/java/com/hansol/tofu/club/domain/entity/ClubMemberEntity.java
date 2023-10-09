@@ -40,4 +40,12 @@ public class ClubMemberEntity extends TimeEntity {
 	@Column(name = "status", nullable = false)
 	@ColumnDefault("WAITING")
 	private ClubJoinStatus clubJoinStatus;
+
+	public void accept() {
+		this.clubJoinStatus = ClubJoinStatus.ACCEPTED;
+	}
+
+	public void reject() {
+		this.clubJoinStatus = ClubJoinStatus.REJECTED;
+	}
 }
