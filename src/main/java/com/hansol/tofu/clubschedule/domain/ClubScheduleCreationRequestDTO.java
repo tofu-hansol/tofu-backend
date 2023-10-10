@@ -1,5 +1,6 @@
 package com.hansol.tofu.clubschedule.domain;
 
+import com.hansol.tofu.club.domain.entity.ClubEntity;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -19,11 +20,12 @@ public record ClubScheduleCreationRequestDTO(
     public ClubScheduleCreationRequestDTO {
     }
 
-    public ClubScheduleEntity toEntity(ClubScheduleCreationRequestDTO schedule) {
+    public ClubScheduleEntity toEntity(ClubScheduleCreationRequestDTO schedule, ClubEntity club) {
         return ClubScheduleEntity.builder()
                 .title(schedule.title())
                 .content(schedule.content())
                 .eventAt(ZonedDateTime.of(schedule.eventAt(), ZoneId.of("Asia/Seoul")))
+                .club(club)
                 .build();
     }
 }
