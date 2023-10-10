@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
@@ -19,9 +20,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 public class ClubScheduleControllerTest {
 
     private MockMvc client;
+
     private ClubScheduleService clubScheduleService;
 
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
@@ -29,7 +32,8 @@ public class ClubScheduleControllerTest {
     @BeforeEach
     void setUp() {
         clubScheduleService = mock(ClubScheduleService.class);
-        client = MockMvcBuilders.standaloneSetup(new ClubScheduleController(clubScheduleService))
+        client = MockMvcBuilders
+                .standaloneSetup(new ClubScheduleController(clubScheduleService))
                 .setControllerAdvice(new BaseExceptionHandler())
                 .build();
     }
@@ -38,15 +42,16 @@ public class ClubScheduleControllerTest {
     void addClubSchedule_모임일정추가요청시_성공한다() throws Exception {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().plusHours(1L))
-                .title("두부먹는모임")
-                .content("두부먹는모임입니다")
+                .title("한솔두부")
+                .content("한솔두부모임")
                 .build();
 
-        client.perform(post("/api/club-schedule")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
-            .andExpect(status().isOk());
+        client.perform(post("/api/clubs/{clubId}/schedules", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
     }
 
 
@@ -54,12 +59,12 @@ public class ClubScheduleControllerTest {
     void addClubSchedule_과거시간으로_모임추가시_예외가_발생한다() throws Exception {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().minusHours(1))
-                .title("두부먹는모임")
-                .content("두부먹는모임입니다")
+                .title("한솔두부")
+                .content("한솔두부모임")
                 .build();
 
 
-        client.perform(post("/api/club-schedule")
+        client.perform(post("/api/clubs/{clubId}/schedules", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
