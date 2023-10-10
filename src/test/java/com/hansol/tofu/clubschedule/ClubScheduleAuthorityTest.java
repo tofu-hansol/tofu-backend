@@ -1,0 +1,77 @@
+package com.hansol.tofu.clubschedule;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.hansol.tofu.clubschedule.domain.ClubScheduleCreationRequestDTO;
+import com.hansol.tofu.clubschedule.mock.WithMockCustomUser;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import java.time.LocalDateTime;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+
+//@WebMvcTest(ClubScheduleController.class)
+//@MockBean(JpaMetamodelMappingContext.class)
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = {ClubScheduleController.class, ClubAuthorizationLogic.class})
+//@WebAppConfiguration
+@SpringBootTest
+@AutoConfigureMockMvc
+@Disabled
+public class ClubScheduleAuthorityTest {
+
+    @Autowired
+    private MockMvc mvc;
+
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
+    @Test
+    @WithMockCustomUser(username = "lisa@test.com")
+    void addClubSchedule_일반유저_권한으로_모임일정_등록시_예외가_발생한다() throws Exception {
+        var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
+                .eventAt(LocalDateTime.now().plusHours(1))
+                .title("한솔두부")
+                .content("한솔두부모임")
+                .build();
+
+
+        long clubId = 3L;
+        mvc.perform(post("/api/clubs/" + clubId + "/schedules")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is5xxServerError())
+                .andExpect(jsonPath("$.message", Matchers.is("Access Denied")));
+    }
+
+    @Test
+    @WithMockCustomUser(username = "lisa@test.com")
+    void addClubSchedule_동호회장_권한으로_모임일정_등록시_등록에_성공한다() throws Exception {
+        var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
+                .eventAt(LocalDateTime.now().plusHours(1))
+                .title("한솔두부")
+                .content("한솔두부모임")
+                .build();
+
+
+        mvc.perform(post("/api/clubs/{clubId}/schedules", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
+}
