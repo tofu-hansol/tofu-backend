@@ -21,6 +21,7 @@ public enum ErrorCode {
 	NOT_FOUND_CATEGORY(HttpStatus.NOT_FOUND, "카테고리 정보를 찾을 수 없습니다"),
 	NOT_FOUND_CLUB(HttpStatus.NOT_FOUND, "동호회 정보를 찾을 수 없습니다"),
 	NOT_FOUND_CLUB_MEMBER(HttpStatus.NOT_FOUND, "해당 동호회에 가입 혹은 가입요청된 회원 정보를 찾을 수 없습니다"),
+	NOT_FOUND_CLUB_SCHEDULE(HttpStatus.NOT_FOUND, "동호회 모임일정 정보를 찾을 수 없습니다"),
 
 
 	FAILED_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송에 실패하였습니다"),

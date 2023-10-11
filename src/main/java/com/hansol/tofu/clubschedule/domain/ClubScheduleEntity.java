@@ -1,6 +1,7 @@
 package com.hansol.tofu.clubschedule.domain;
 
 import com.hansol.tofu.club.domain.entity.ClubEntity;
+import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleEditRequestDTO;
 import com.hansol.tofu.clubschedule.enums.ClubScheduleStatus;
 import com.hansol.tofu.global.TimeEntity;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -40,5 +42,11 @@ public class ClubScheduleEntity extends TimeEntity {
 	@JoinColumn(name = "club_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ClubEntity club;
+
+	public void changeClubSchedule(ClubScheduleEditRequestDTO clubSchedule) {
+		this.title = clubSchedule.title();
+		this.content = clubSchedule.content();
+		this.eventAt = ZonedDateTime.of(clubSchedule.eventAt(), ZoneId.of("Asia/Seoul"));
+	}
 
 }

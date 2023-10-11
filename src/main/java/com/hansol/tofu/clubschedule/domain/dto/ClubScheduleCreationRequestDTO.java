@@ -1,6 +1,7 @@
-package com.hansol.tofu.clubschedule.domain;
+package com.hansol.tofu.clubschedule.domain.dto;
 
 import com.hansol.tofu.club.domain.entity.ClubEntity;
+import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
