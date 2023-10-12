@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,5 +88,17 @@ public class ClubScheduleControllerTest {
                         .content(objectMapper.writeValueAsString(clubScheduleEditRequestDTO)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void editClubSchedule_모임일정삭제에_성공한다() throws Exception {
+        var scheduleId = 2L;
+
+
+        client.perform(delete("/api/clubs/" + 1L + "/schedules/" + scheduleId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 
 }

@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,6 +126,33 @@ public class ClubScheduleAuthorityTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(clubScheduleCreationRequestDTO)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockCustomUser(username = "lisa@test.com")
+    void editClubSchedule_동호회장_권한으로_모임일정_삭제에_성공한다() throws Exception {
+        Long clubIdAsPresident = 1L;
+        Long scheduleId = 2L;
+
+
+        mvc.perform(delete("/api/clubs/" + clubIdAsPresident + "/schedules/" + scheduleId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockCustomUser(username = "lisa@test.com")
+    void editClubSchedule_총무_권한으로_모임일정_삭제에_성공한다() throws Exception {
+        Long clubIdAsManager = 2L;
+        Long scheduleId = 2L;
+
+
+        mvc.perform(delete("/api/clubs/" + clubIdAsManager + "/schedules/" + scheduleId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is5xxServerError())
+                .andExpect(jsonPath("$.message", Matchers.is("Access Denied")));
     }
 
 }

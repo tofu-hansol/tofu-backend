@@ -5,6 +5,7 @@ import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleCreationRequestDTO;
 import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleEditRequestDTO;
+import com.hansol.tofu.clubschedule.enums.ClubScheduleStatus;
 import com.hansol.tofu.clubschedule.repository.ClubScheduleRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.error.ErrorCode;
@@ -95,6 +96,24 @@ public class ClubScheduleServiceTest {
         assertEquals(ZonedDateTime.of(clubScheduleEditRequestDTO.eventAt(), ZoneId.of("Asia/Seoul")), clubScheduleEntity.getEventAt());
         assertEquals(clubScheduleEditRequestDTO.title(), clubScheduleEntity.getTitle());
         assertEquals(clubScheduleEditRequestDTO.content(), clubScheduleEntity.getContent());
+    }
+
+    @Test
+    void deleteClubSchedule_동호회_모임일정을_삭제한다() throws Exception {
+        var clubScheduleEntity = ClubScheduleEntity.builder()
+                .id(2L)
+                .eventAt(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")))
+                .title("한솔두부모임")
+                .content("한솔두부모임입니다")
+                .clubScheduleStatus(ClubScheduleStatus.RECRUITING)
+                .build();
+        when(clubScheduleRepository.findById(2L)).thenReturn(Optional.of(clubScheduleEntity));
+
+
+        sut.deleteClubSchedule(2L);
+
+
+        assertEquals(clubScheduleEntity.getClubScheduleStatus(), ClubScheduleStatus.DELETED);
     }
 
 

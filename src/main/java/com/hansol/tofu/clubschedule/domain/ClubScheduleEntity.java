@@ -49,4 +49,8 @@ public class ClubScheduleEntity extends TimeEntity {
 		this.eventAt = ZonedDateTime.of(clubSchedule.eventAt(), ZoneId.of("Asia/Seoul"));
 	}
 
+	public void deleteClubSchedule() {
+		this.clubScheduleStatus = ClubScheduleStatus.DELETED;
+	}
+
 }

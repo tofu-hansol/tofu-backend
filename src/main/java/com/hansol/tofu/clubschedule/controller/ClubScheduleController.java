@@ -51,4 +51,18 @@ public class ClubScheduleController {
         return BaseHttpResponse.successWithNoContent();
     }
 
+    @Operation(summary = "모임일정 삭제 API", responses = {
+            @ApiResponse(responseCode = "200", description = "모임일정 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+            @ApiResponse(responseCode = "400", description = "요청값 에러", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 모임일정", content = @Content(schema = @Schema(implementation = Long.class))),
+    })
+    @IsPresident
+    @DeleteMapping("/{clubId}/schedules/{scheduleId}")
+    public BaseHttpResponse<?> deleteClubSchedule(@PathVariable Long clubId,
+                                                @PathVariable Long scheduleId
+    ) {
+        clubScheduleService.deleteClubSchedule(scheduleId);
+        return BaseHttpResponse.successWithNoContent();
+    }
+
 }

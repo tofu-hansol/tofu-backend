@@ -39,4 +39,11 @@ public class ClubScheduleService {
 		clubScheduleEntity.changeClubSchedule(clubScheduleEditRequestDTO);
 	}
 
+	public void deleteClubSchedule(Long scheduleId) {
+		var clubScheduleEntity = clubScheduleRepository.findById(scheduleId)
+				.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_SCHEDULE));
+
+		clubScheduleEntity.deleteClubSchedule();
+	}
+
 }
