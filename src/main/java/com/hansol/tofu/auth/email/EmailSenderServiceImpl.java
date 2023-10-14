@@ -24,6 +24,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
         try {
             var mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+			mimeMessageHelper.setFrom("no-reply@hansol.com");
             mimeMessageHelper.setTo(emailRequestDTO.to());
             mimeMessageHelper.setSubject(emailRequestDTO.subject());
             mimeMessageHelper.setText(emailRequestDTO.content());

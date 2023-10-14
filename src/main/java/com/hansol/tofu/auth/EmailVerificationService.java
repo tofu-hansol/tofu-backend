@@ -8,6 +8,8 @@ import com.hansol.tofu.error.BaseException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,6 +26,7 @@ public class EmailVerificationService {
 
     private final HttpServletRequest httpServletRequest;
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void verifyEmail(String email) {
 
         String code = createCode();
