@@ -1,5 +1,7 @@
 package com.hansol.tofu.config.security;
 
+import java.util.Optional;
+
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +24,13 @@ public class ClubAuthorizationLogic {
 	public boolean decide(MethodSecurityExpressionOperations root, Long clubId, ClubRole clubRole) {
 		var userPrincipal = (CustomUserDetails)root.getAuthentication().getPrincipal();
 		var clubAuthorizationMap = userPrincipal.getClubAuthorizationDTO();
-		int findPriority = clubAuthorizationMap.get(clubId).clubRole().getPriority();
+		var clubAuthorizationDTO = Optional.ofNullable(clubAuthorizationMap.get(clubId));
 
-		return findPriority <= clubRole.getPriority();
+		if (clubAuthorizationDTO.isEmpty()) {
+			return false;
+		} else {
+			int findPriority = clubAuthorizationDTO.get().clubRole().getPriority();
+			return findPriority <= clubRole.getPriority();
+		}
 	}
 }

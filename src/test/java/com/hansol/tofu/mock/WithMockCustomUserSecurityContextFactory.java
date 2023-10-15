@@ -1,4 +1,4 @@
-package com.hansol.tofu.clubschedule.mock;
+package com.hansol.tofu.mock;
 
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
 import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;

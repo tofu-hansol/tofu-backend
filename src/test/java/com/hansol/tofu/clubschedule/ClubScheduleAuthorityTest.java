@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleCreationRequestDTO;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleEditRequestDTO;
-import com.hansol.tofu.clubschedule.mock.WithMockCustomUser;
+import com.hansol.tofu.mock.WithMockCustomUser;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
