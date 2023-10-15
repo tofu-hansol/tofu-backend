@@ -1,6 +1,7 @@
 package com.hansol.tofu.clubschedule;
 
 import com.hansol.tofu.club.repository.ClubRepository;
+import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleCreationRequestDTO;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleEditRequestDTO;
 import com.hansol.tofu.clubschedule.repository.ClubScheduleRepository;
@@ -21,6 +22,12 @@ public class ClubScheduleService {
 
 	private final ClubScheduleRepository clubScheduleRepository;
 	private final ClubRepository clubRepository;
+
+	@Transactional(readOnly = true)
+	public ClubScheduleEntity findClubScheduleBy(Long clubScheduleId) {
+		return clubScheduleRepository.findById(clubScheduleId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_SCHEDULE));
+	}
 
 	public Long addClubSchedule(Long clubId, ClubScheduleCreationRequestDTO clubScheduleCreationRequestDTO) {
 		var clubEntity = clubRepository.findById(clubId)
