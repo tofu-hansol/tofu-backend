@@ -6,6 +6,8 @@ import com.hansol.tofu.clubschedule.enums.ClubScheduleStatus;
 import com.hansol.tofu.global.TimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import software.amazon.ion.Decimal;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -31,8 +33,8 @@ public class ClubScheduleEntity extends TimeEntity {
 	@Column(nullable = false)
 	private String title;
 
-	@Column(nullable = false)
-	private String content;
+	@Column(name = "place_name", nullable = false)
+	private String placeName;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
@@ -43,10 +45,17 @@ public class ClubScheduleEntity extends TimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ClubEntity club;
 
+	private Double latitude;
+
+	private Double longitude;
+
+
 	public void changeClubSchedule(ClubScheduleEditRequestDTO clubSchedule) {
 		this.title = clubSchedule.title();
-		this.content = clubSchedule.content();
+		this.placeName = clubSchedule.content();
 		this.eventAt = ZonedDateTime.of(clubSchedule.eventAt(), ZoneId.of("Asia/Seoul"));
+		this.latitude = clubSchedule.latitude();
+		this.longitude = clubSchedule.longitude();
 	}
 
 	public void deleteClubSchedule() {

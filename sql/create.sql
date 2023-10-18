@@ -99,10 +99,12 @@ CREATE TABLE club_schedule (
        id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
        event_at	datetime	NOT NULL,
        title	varchar(250)	NOT NULL,
-       content	MEDIUMTEXT	NULL,
+       place_name	VARCHAR(250)	NULL,
        club_id	int unsigned	NOT NULL,
        created_at   datetime                       not null default CURRENT_TIMESTAMP,
        updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+       latitude     decimal(10, 8) null,
+       longitude    decimal(11, 8) null,
        status	varchar(25)	NOT NULL	DEFAULT 'RECRUITING' COMMENT 'RECRUITING, CLOSED, DELETED',
 
        constraint fk_club_schedule_club
