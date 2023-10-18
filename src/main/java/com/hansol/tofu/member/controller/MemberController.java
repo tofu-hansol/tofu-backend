@@ -45,6 +45,22 @@ public class MemberController {
 		return BaseHttpResponse.success(memberService.changeMemberProfileImage(image));
 	}
 
+	// // 내 상세정보 조회
+	// @Operation(summary = "내 상세정보 조회 API", responses = {
+	// 	@ApiResponse(responseCode = "200", description = "내 상세정보 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "401", description = "존재하지 않는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	// })
+	// @GetMapping("/me")
+	// public BaseHttpResponse<>
+	//
+	//
+	// // 상대방 정보 조회
+	// @Operation(summary = "상대방 정보 조회 API", responses = {
+	// 	@ApiResponse(responseCode = "200", description = "상대방 정보 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "401", description = "존재하지 않는 회원", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	// })
+	// @GetMapping("/{memberId}")
+
 
 
 }

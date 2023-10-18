@@ -1,7 +1,7 @@
 package com.hansol.tofu.member;
 
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.global.SecurityUtils;
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.hansol.tofu.error.ErrorCode.*;
-import static com.hansol.tofu.member.enums.MemberStatus.ACTIVATE;
 
 @Service
 @Transactional
@@ -42,6 +41,23 @@ public class MemberService {
     public Optional<MemberEntity> findMemberBy(String email, MemberStatus status) {
         return memberRepository.findMemberByEmailAndMemberStatus(email, status);
     }
+
+	@Transactional(readOnly = true)
+	public Optional<MemberEntity> findMemberBy(Long memberId) {
+		return memberRepository.findMemberById(memberId);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<MemberEntity> findMemberBy(Long memberId, MemberStatus status) {
+		return memberRepository.findMemberByIdAndMemberStatus(memberId, status);
+	}
+
+	// TODO: sort by club join date desc
+	// @Transactional(readOnly = true)
+	// public MemberMyProfileResponseDTO getMyProfile() {
+	// 	Long currentMemberId = SecurityUtils.getCurrentUserId();
+	//
+	// }
 
     public Map<Long, ClubAuthorizationDTO> getCurrentMemberClubAuthority() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

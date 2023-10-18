@@ -1,6 +1,19 @@
 package com.hansol.tofu.member;
 
-import com.hansol.tofu.auth.domain.model.CustomUserDetails;
+import static com.hansol.tofu.error.ErrorCode.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.hansol.tofu.config.security.SecurityConfig;
 import com.hansol.tofu.dept.domain.DeptEntity;
 import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
@@ -8,25 +21,11 @@ import com.hansol.tofu.member.domain.MemberEntity;
 import com.hansol.tofu.member.domain.dto.MemberEditRequestDTO;
 import com.hansol.tofu.member.domain.dto.MemberJoinRequestDTO;
 import com.hansol.tofu.member.repository.MemberRepository;
+import com.hansol.tofu.mock.WithMockCustomUser;
 import com.hansol.tofu.upload.image.StorageService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithUserDetails;
 
-import java.util.Collections;
-import java.util.Optional;
-
-import static com.hansol.tofu.error.ErrorCode.DUPLICATE_MEMBER;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration
 class MemberServiceTest {
 
     private MemberService sut;
@@ -34,20 +33,6 @@ class MemberServiceTest {
     private MemberRepository memberRepository;
     private DeptRepository deptRepository;
 	private StorageService storageService;
-
-    @BeforeAll
-    static void setUpAll() {
-        UserDetails userDetails = new CustomUserDetails("test@test.com", "test1234", 1L, Collections.emptyList(), Collections.emptyMap());
-        var authentication = new UsernamePasswordAuthenticationToken(
-      			userDetails,
-      			null,
-      			userDetails.getAuthorities()
-      		);
-
-      		var context = SecurityContextHolder.createEmptyContext();
-      		context.setAuthentication(authentication);
-      		SecurityContextHolder.setContext(context);
-    }
 
     @BeforeEach
     void setUp() {
@@ -100,12 +85,8 @@ class MemberServiceTest {
         assertEquals(DUPLICATE_MEMBER.getMessage(), baseException.getMessage());
     }
 
-    // TODO: https://skyriv312079.tistory.com/179
 	@Test
-    @WithUserDetails(
-            value = "test@test.com",
-            setupBefore = TestExecutionEvent.TEST_EXECUTION
-    )
+	@WithMockCustomUser(username = "lisa@test.com")
 	void editMember_유효하는_정보로_회원정보_수정에_성공한다() {
 		var memberEditRequestDTO = MemberEditRequestDTO.builder()
 			.name("뭉치")
@@ -131,11 +112,8 @@ class MemberServiceTest {
 	}
 
     @Test
-    @WithUserDetails(
-              value = "test@test.com",
-              setupBefore = TestExecutionEvent.TEST_EXECUTION
-    )
-	void changeMemberProfileImage_유효하는_정보로_회원정보_수정에_성공한다() {
+	@WithMockCustomUser(username = "lisa@test.com")
+	void changeMemberProfileImage_유효하는_정보로_회원프로필_이미지변경에_성공한다() {
 		MockMultipartFile profileImage = new MockMultipartFile("profileImage", "test.jpg", "image/jpeg", "test".getBytes());
         var memberEntity = MemberEntity.builder().build();
 
@@ -148,6 +126,21 @@ class MemberServiceTest {
 
         assertEquals(memberEntity.getProfileUrl(), "http://image.com/testImage");
         verify(storageService).uploadImage(profileImage, "images/member/");
+	}
+
+	@Test
+	@WithMockCustomUser(username = "lisa@test.com")
+	void getMyProfile_내_프로필_정보를_가져온다() {
+		// var memberEntity = MemberEntity.builder().
+		// 	.
+		// 	build();
+		// when(memberRepository.findById(1L)).thenReturn(Optional.of(memberEntity));
+		//
+		//
+		// sut.getMyProfile();
+		//
+		//
+		// verify(memberRepository).findById(1L);
 	}
 
 
