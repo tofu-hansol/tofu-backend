@@ -1,4 +1,4 @@
-package com.hansol.tofu.club.annotation.filter;
+package com.hansol.tofu.clubmember.annotation.filter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,5 @@
 package com.hansol.tofu.club.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.club.ClubService;
-import com.hansol.tofu.club.annotation.IsPresident;
+import com.hansol.tofu.clubmember.annotation.IsPresident;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
@@ -74,44 +73,5 @@ public class ClubController {
 	@PatchMapping("/{clubId}/profile-image")
 	public BaseHttpResponse<Long> changeProfileImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile profileImage) {
 		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
-	}
-
-	@Operation(summary = "동호회 가입 신청 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 가입 신청 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@PostMapping("/{clubId}/members")
-	public BaseHttpResponse<Long> requestJoinClub(@PathVariable Long clubId) {
-		return BaseHttpResponse.success(clubService.requestJoinClub(clubId));
-	}
-
-	@Operation(summary = "동호회 가입 신청 취소 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 가입 신청 취소 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@DeleteMapping("/{clubId}/members")
-	public BaseHttpResponse<Long> cancelJoinClub(@PathVariable Long clubId) {
-		return BaseHttpResponse.success(clubService.cancelJoinClub(clubId));
-	}
-
-	@Operation(summary = "동호회 가입 승인 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 가입 승인 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@IsPresident
-	@PatchMapping("/{clubId}/members/{memberId}")
-	public BaseHttpResponse<Long> acceptJoinClub(@PathVariable Long clubId, @PathVariable Long memberId) {
-		return BaseHttpResponse.success(clubService.acceptJoinClub(clubId, memberId));
-	}
-
-	// TODO : 분리 필요
-	@Operation(summary = "동호회 가입 거절 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 가입 거절 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회/회원 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@IsPresident
-	@DeleteMapping("/{clubId}/members/{memberId}")
-	public BaseHttpResponse<Long> rejectJoinClub(@PathVariable Long clubId, @PathVariable Long memberId) {
-		return BaseHttpResponse.success(clubService.rejectJoinClub(clubId, memberId));
 	}
 }

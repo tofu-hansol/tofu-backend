@@ -1,8 +1,8 @@
-package com.hansol.tofu.club.store;
+package com.hansol.tofu.clubmember.store;
 
 import java.util.List;
 
-import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 
 public interface ClubMemberQueryStore {
 

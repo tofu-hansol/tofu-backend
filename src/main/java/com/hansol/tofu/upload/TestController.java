@@ -1,6 +1,5 @@
 package com.hansol.tofu.upload;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hansol.tofu.club.annotation.IsManager;
-import com.hansol.tofu.club.annotation.IsMember;
-import com.hansol.tofu.club.annotation.IsPresident;
-import com.hansol.tofu.club.domain.dto.ClubAuthorization;
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.annotation.IsManager;
+import com.hansol.tofu.clubmember.annotation.IsMember;
+import com.hansol.tofu.clubmember.annotation.IsPresident;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 import com.hansol.tofu.member.MemberService;
 

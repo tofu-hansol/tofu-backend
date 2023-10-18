@@ -2,7 +2,7 @@ package com.hansol.tofu.auth.domain.dto;
 
 import java.util.Map;
 
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
 
 import lombok.Builder;
 

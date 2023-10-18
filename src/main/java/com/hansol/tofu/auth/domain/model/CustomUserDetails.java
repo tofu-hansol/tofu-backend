@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
 
 import lombok.AccessLevel;
 import lombok.Getter;

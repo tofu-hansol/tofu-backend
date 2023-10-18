@@ -27,7 +27,7 @@ public class BoardService {
 
     public Long addBoard(Long clubId, BoardCreationRequestDTO boardCreationRequestDTO) {
         Long memberId = SecurityUtils.getCurrentUserId();
-        var memberEntity = memberRepository.findByIdAndMemberStatus(memberId, ACTIVATE)
+        var memberEntity = memberRepository.findMemberByIdAndMemberStatus(memberId, ACTIVATE)
                 .orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
         photoService.savePhotos(boardCreationRequestDTO.clubPhotoRequestDTOs());

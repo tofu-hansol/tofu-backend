@@ -1,4 +1,4 @@
-package com.hansol.tofu.club.domain.dto;
+package com.hansol.tofu.clubmember.domain.dto;
 
 import com.hansol.tofu.club.enums.ClubRole;
 

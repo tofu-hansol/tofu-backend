@@ -1,4 +1,4 @@
-package com.hansol.tofu.club.enums;
+package com.hansol.tofu.clubmember;
 
 public enum ClubJoinStatus {
 	WAITING, ACCEPTED, REJECTED;

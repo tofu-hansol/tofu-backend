@@ -3,7 +3,7 @@ package com.hansol.tofu.board.controller;
 import com.hansol.tofu.board.BoardService;
 import com.hansol.tofu.board.domain.dto.BoardCreationRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardEditRequestDTO;
-import com.hansol.tofu.club.annotation.IsMember;
+import com.hansol.tofu.clubmember.annotation.IsMember;
 import com.hansol.tofu.global.BaseHttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "applicant", description = "동호회 게시글 API")
+@Tag(name = "board", description = "동호회 게시글 API")
 @RestController
 @RequestMapping("/api/clubs")
 @RequiredArgsConstructor

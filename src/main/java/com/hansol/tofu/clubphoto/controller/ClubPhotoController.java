@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "applicant", description = "동호회 사진 API")
+@Tag(name = "photo", description = "동호회 사진 API")
 @RestController
 @RequestMapping("/api/clubs")
 @RequiredArgsConstructor

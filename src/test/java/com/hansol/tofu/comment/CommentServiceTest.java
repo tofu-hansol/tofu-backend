@@ -49,7 +49,7 @@ class CommentServiceTest {
         var boardEntity = BoardEntity.builder().id(boardId).member(memberEntity).build();
         var commentEntity = CommentEntity.builder().id(3L).build();
 
-        when(memberRepository.findByIdAndMemberStatus(memberId, MemberStatus.ACTIVATE))
+        when(memberRepository.findMemberByIdAndMemberStatus(memberId, MemberStatus.ACTIVATE))
                 .thenReturn(Optional.of(memberEntity));
         when(boardRepository.findById(boardId)).thenReturn(Optional.of(boardEntity));
         when(commentRepository.save(commentCreationRequestDTO.toEntity(memberEntity, boardEntity))).thenReturn(commentEntity);

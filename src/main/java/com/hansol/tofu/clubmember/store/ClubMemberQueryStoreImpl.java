@@ -1,14 +1,14 @@
-package com.hansol.tofu.club.store;
+package com.hansol.tofu.clubmember.store;
 
 import static com.hansol.tofu.club.domain.entity.QClubEntity.*;
-import static com.hansol.tofu.club.domain.entity.QClubMemberEntity.*;
+import static com.hansol.tofu.clubmember.domain.entity.QClubMemberEntity.*;
 import static com.hansol.tofu.member.domain.QMemberEntity.*;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

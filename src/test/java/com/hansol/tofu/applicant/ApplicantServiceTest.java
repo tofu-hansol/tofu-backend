@@ -47,7 +47,7 @@ class ApplicantServiceTest {
 			.member(memberEntity)
 			.build();
 		when(applicantRepository.existsByMemberAndClubSchedule(memberEntity, clubScheduleEntity)).thenReturn(false);
-		when(memberRepository.findByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
+		when(memberRepository.findMemberByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
 		when(applicantRepository.save(applicantEntity)).thenReturn(applicantEntity);
 
 
@@ -63,7 +63,7 @@ class ApplicantServiceTest {
 	void addApplicant_이미참가신청한_유저가_중복신청할_경우_예외가_발생한다() {
 		var clubScheduleEntity = ClubScheduleEntity.builder().build();
 		var memberEntity = MemberEntity.builder().build();
-		when(memberRepository.findByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
+		when(memberRepository.findMemberByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
 		when(applicantRepository.existsByMemberAndClubSchedule(memberEntity, clubScheduleEntity)).thenReturn(true);
 
 
@@ -84,7 +84,7 @@ class ApplicantServiceTest {
 			.member(memberEntity)
 			.clubSchedule(clubScheduleEntity)
 			.build();
-		when(memberRepository.findByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
+		when(memberRepository.findMemberByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
 		when(applicantRepository.findByMemberAndClubSchedule(memberEntity, clubScheduleEntity)).thenReturn(Optional.of(applicantEntity));
 
 
@@ -99,7 +99,7 @@ class ApplicantServiceTest {
 	void cancelApplicant_존재하지_않는_모임일정_참여정보에_취소요청할_때에_예외가_발생한다() throws Exception {
 		var clubScheduleEntity = ClubScheduleEntity.builder().build();
 		var memberEntity = MemberEntity.builder().build();
-		when(memberRepository.findByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
+		when(memberRepository.findMemberByIdAndMemberStatus(1L, ACTIVATE)).thenReturn(Optional.of(memberEntity));
 		when(applicantRepository.findByMemberAndClubSchedule(memberEntity, clubScheduleEntity)).thenReturn(Optional.empty());
 
 

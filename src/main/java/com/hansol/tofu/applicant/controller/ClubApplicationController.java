@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hansol.tofu.applicant.ClubApplicationService;
-import com.hansol.tofu.club.annotation.IsMember;
+import com.hansol.tofu.clubmember.annotation.IsMember;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
