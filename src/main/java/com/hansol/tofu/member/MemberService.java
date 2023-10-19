@@ -8,6 +8,8 @@ import com.hansol.tofu.global.SecurityUtils;
 import com.hansol.tofu.member.domain.MemberEntity;
 import com.hansol.tofu.member.domain.dto.MemberEditRequestDTO;
 import com.hansol.tofu.member.domain.dto.MemberJoinRequestDTO;
+import com.hansol.tofu.member.domain.dto.MemberMyProfileResponseDTO;
+import com.hansol.tofu.member.domain.dto.MemberProfileResponseDTO;
 import com.hansol.tofu.member.enums.MemberStatus;
 import com.hansol.tofu.member.repository.MemberRepository;
 import com.hansol.tofu.upload.image.StorageService;
@@ -52,12 +54,21 @@ public class MemberService {
 		return memberRepository.findMemberByIdAndMemberStatus(memberId, status);
 	}
 
-	// TODO: sort by club join date desc
-	// @Transactional(readOnly = true)
-	// public MemberMyProfileResponseDTO getMyProfile() {
-	// 	Long currentMemberId = SecurityUtils.getCurrentUserId();
-	//
-	// }
+	// TODO: make unit test
+	@Transactional(readOnly = true)
+	public MemberMyProfileResponseDTO getMyProfile() {
+		Long currentMemberId = SecurityUtils.getCurrentUserId();
+
+		return memberRepository.findMyProfile(currentMemberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
+	}
+
+	// TODO: make unit test
+	@Transactional(readOnly = true)
+	public MemberProfileResponseDTO getMemberProfile(Long memberId) {
+		return memberRepository.findMemberProfile(memberId)
+			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
+	}
 
     public Map<Long, ClubAuthorizationDTO> getCurrentMemberClubAuthority() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

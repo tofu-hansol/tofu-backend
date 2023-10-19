@@ -3,11 +3,13 @@ package com.hansol.tofu.clubmember;
 import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hansol.tofu.club.ClubService;
+import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
 import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 import com.hansol.tofu.club.enums.ClubStatus;
 import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
@@ -25,7 +27,12 @@ public class ClubAuthorityService {
 	private final ClubService clubService;
 	private final ClubMemberRepository clubMemberRepository;
 
-	// TDOO : 요청시 중복된 요청이 있는지 확인 필요
+
+	public List<ClubJoinResponseDTO> getClubJoinList(Long memberId) {
+		return clubMemberRepository.findClubJoinListBy(memberId);
+	}
+
+	// TODO : 요청시 중복된 요청이 있는지 확인 필요
 	public Long requestJoinClub(Long clubId) {
 		Long memberId = SecurityUtils.getCurrentUserId();
 		var memberEntity = memberService.findMemberBy(memberId)

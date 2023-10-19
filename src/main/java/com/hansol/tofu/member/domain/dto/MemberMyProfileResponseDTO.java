@@ -1,9 +1,8 @@
 package com.hansol.tofu.member.domain.dto;
 
-import java.util.List;
-
-import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
 import com.querydsl.core.annotations.QueryProjection;
+
+import lombok.Builder;
 
 public record MemberMyProfileResponseDTO(
 	String email,
@@ -12,10 +11,10 @@ public record MemberMyProfileResponseDTO(
 	String companyName,
 	String deptName,
 	String positionName,
-	String mbti,
-	List<ClubJoinResponseDTO> clubJoinInfo
+	String mbti
 ) {
 	@QueryProjection
+	@Builder
 	public MemberMyProfileResponseDTO {
 	}
 }
