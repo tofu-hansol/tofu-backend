@@ -54,7 +54,7 @@ public class MemberService {
 		return memberRepository.findMemberByIdAndMemberStatus(memberId, status);
 	}
 
-	// TODO: make unit test
+	// TODO: write unit test
 	@Transactional(readOnly = true)
 	public MemberMyProfileResponseDTO getMyProfile() {
 		Long currentMemberId = SecurityUtils.getCurrentUserId();
@@ -63,7 +63,7 @@ public class MemberService {
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 	}
 
-	// TODO: make unit test
+	// TODO: write unit test
 	@Transactional(readOnly = true)
 	public MemberProfileResponseDTO getMemberProfile(Long memberId) {
 		return memberRepository.findMemberProfile(memberId)

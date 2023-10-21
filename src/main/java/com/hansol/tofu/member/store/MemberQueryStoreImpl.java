@@ -35,8 +35,8 @@ public class MemberQueryStoreImpl implements MemberQueryStore {
 				memberEntity.mbti
 			))
 			.from(memberEntity)
-			.leftJoin(deptEntity).fetchJoin()
-			.leftJoin(companyEntity).fetchJoin()
+			.leftJoin(deptEntity).on(memberEntity.dept.id.eq(deptEntity.id)).fetchJoin()
+			.leftJoin(companyEntity).on(deptEntity.company.id.eq(companyEntity.id)).fetchJoin()
 			.distinct()
 			.where(memberEntity.id.eq(memberId))
 			.fetchOne());
@@ -53,8 +53,8 @@ public class MemberQueryStoreImpl implements MemberQueryStore {
 				memberEntity.position
 			))
 			.from(memberEntity)
-			.leftJoin(deptEntity).fetchJoin()
-			.leftJoin(companyEntity).fetchJoin()
+			.leftJoin(deptEntity).on(memberEntity.dept.id.eq(deptEntity.id)).fetchJoin()
+			.leftJoin(companyEntity).on(deptEntity.company.id.eq(companyEntity.id)).fetchJoin()
 			.distinct()
 			.where(memberEntity.id.eq(memberId))
 			.fetchOne());
