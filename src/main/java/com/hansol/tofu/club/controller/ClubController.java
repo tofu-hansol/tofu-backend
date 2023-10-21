@@ -1,18 +1,23 @@
 package com.hansol.tofu.club.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.club.ClubService;
-import com.hansol.tofu.clubmember.annotation.IsPresident;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
+import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
+import com.hansol.tofu.clubmember.annotation.IsPresident;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +28,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-// TODO : API 신청 분리 (clubmember, club 분리)
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "club", description = "동호회 API")
 @RestController
@@ -74,4 +78,13 @@ public class ClubController {
 	public BaseHttpResponse<Long> changeProfileImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile profileImage) {
 		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
 	}
+
+	@Operation(summary = "동호회 정보 조회 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 정보 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	})
+	@GetMapping
+	public BaseHttpResponse<Page<ClubResponseDTO>> getClubList(@RequestParam Long categoryId, Pageable pageable) {
+		return BaseHttpResponse.success(clubService.getClubListBy(categoryId, pageable));
+	}
+
 }

@@ -1,14 +1,19 @@
 package com.hansol.tofu.clubmember.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hansol.tofu.clubmember.ClubAuthorityService;
 import com.hansol.tofu.clubmember.annotation.IsPresident;
+import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "club_member", description = "동호회 권한 API")
 @RestController
-@RequestMapping("/api/clubs")
+@RequestMapping("/api/club-authority")
 public class ClubAuthorityController {
 
 	private final ClubAuthorityService clubAuthorityService;
@@ -67,5 +72,10 @@ public class ClubAuthorityController {
 	@DeleteMapping("/{clubId}/members/{memberId}")
 	public BaseHttpResponse<Long> rejectJoinClub(@PathVariable Long clubId, @PathVariable Long memberId) {
 		return BaseHttpResponse.success(clubAuthorityService.rejectJoinClub(clubId, memberId));
+	}
+
+	@GetMapping("/{memberId}")
+	public BaseHttpResponse<List<ClubJoinResponseDTO>> getJoinedClubList(@PathVariable Long memberId) {
+		return BaseHttpResponse.success(clubAuthorityService.getJoinedClubList(memberId));
 	}
 }

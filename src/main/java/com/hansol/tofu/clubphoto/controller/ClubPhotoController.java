@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "photo", description = "동호회 사진 API")
 @RestController
-@RequestMapping("/api/clubs")
+@RequestMapping("/api/club-photo")
 @RequiredArgsConstructor
 public class ClubPhotoController {
     private final ClubPhotoService clubPhotoService;

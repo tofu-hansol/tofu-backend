@@ -8,14 +8,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hansol.tofu.club.ClubService;
+import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
 import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
-import com.hansol.tofu.club.enums.ClubStatus;
 import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.global.SecurityUtils;
-import com.hansol.tofu.member.MemberService;
+import com.hansol.tofu.member.enums.MemberStatus;
+import com.hansol.tofu.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,22 +23,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(rollbackFor = SQLException.class)
 public class ClubAuthorityService {
-	private final MemberService memberService;
-	private final ClubService clubService;
+	private final MemberRepository memberRepository;
+	private final ClubRepository clubRepository;
 	private final ClubMemberRepository clubMemberRepository;
 
-
-	public List<ClubJoinResponseDTO> getClubJoinList(Long memberId) {
+	@Transactional(readOnly = true)
+	public List<ClubJoinResponseDTO> getJoinedClubList(Long memberId) {
 		return clubMemberRepository.findClubJoinListBy(memberId);
 	}
 
 	// TODO : 요청시 중복된 요청이 있는지 확인 필요
 	public Long requestJoinClub(Long clubId) {
 		Long memberId = SecurityUtils.getCurrentUserId();
-		var memberEntity = memberService.findMemberBy(memberId)
+		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(memberId, MemberStatus.ACTIVATE)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
-		var clubEntity = clubService.findClubBy(clubId, ClubStatus.ACTIVATE)
+		var clubEntity = clubRepository.findClubById(clubId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 
 		var clubMemberEntity = ClubMemberEntity.builder()

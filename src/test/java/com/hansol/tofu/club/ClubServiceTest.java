@@ -16,6 +16,7 @@ import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.entity.ClubEntity;
 import com.hansol.tofu.club.repository.ClubRepository;
+import com.hansol.tofu.clubmember.ClubAuthorityService;
 import com.hansol.tofu.upload.image.StorageService;
 
 class ClubServiceTest {

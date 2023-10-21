@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
 import com.hansol.tofu.clubmember.domain.dto.QClubJoinResponseDTO;
 import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
+import com.hansol.tofu.clubmember.enums.ClubJoinStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,8 @@ public class ClubMemberQueryStoreImpl implements ClubMemberQueryStore {
 			.leftJoin(clubMemberEntity.member, memberEntity)
 			.fetchJoin()
 			.distinct()
-			.where(clubMemberEntity.member.id.eq(memberId))
+			.where(clubMemberEntity.member.id.eq(memberId)
+				.and(clubMemberEntity.clubJoinStatus.eq(ClubJoinStatus.ACCEPTED)))
 			.fetch();
 	}
 
@@ -46,5 +48,4 @@ public class ClubMemberQueryStoreImpl implements ClubMemberQueryStore {
 			.orderBy(clubMemberEntity.createdAt.desc())
 			.fetch();
 	}
-
 }

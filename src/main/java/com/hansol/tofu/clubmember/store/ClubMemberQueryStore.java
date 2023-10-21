@@ -7,7 +7,7 @@ import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 
 public interface ClubMemberQueryStore {
 
-    List<ClubMemberEntity> findAllByMemberId(Long memberId);
+	List<ClubMemberEntity> findAllByMemberId(Long memberId);
 
 	List<ClubJoinResponseDTO> findClubJoinListBy(Long memberId);
 }

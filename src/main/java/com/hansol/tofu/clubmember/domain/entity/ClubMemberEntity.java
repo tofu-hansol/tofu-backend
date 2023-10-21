@@ -1,7 +1,7 @@
 package com.hansol.tofu.clubmember.domain.entity;
 
 import com.hansol.tofu.club.domain.entity.ClubEntity;
-import com.hansol.tofu.clubmember.ClubJoinStatus;
+import com.hansol.tofu.clubmember.enums.ClubJoinStatus;
 import com.hansol.tofu.club.enums.ClubRole;
 import com.hansol.tofu.global.TimeEntity;
 import com.hansol.tofu.member.domain.MemberEntity;
