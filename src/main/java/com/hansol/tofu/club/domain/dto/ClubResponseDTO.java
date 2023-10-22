@@ -11,7 +11,8 @@ public record ClubResponseDTO(
 	String profileImageUrl,
 	String clubName,
 	long memberCount,
-	ZonedDateTime createdDate
+	ZonedDateTime createdDate,
+	String clubDescription
 ) {
 
 	@Builder
