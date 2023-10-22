@@ -1,7 +1,9 @@
-package com.hansol.tofu.clubphoto.domain;
+package com.hansol.tofu.clubphoto.domain.dto;
 
 import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
 
 public record ClubPhotoRequestDTO(
         Long id,

@@ -1,6 +1,6 @@
 package com.hansol.tofu.board.domain.dto;
 
-import com.hansol.tofu.clubphoto.domain.ClubPhotoRequestDTO;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
