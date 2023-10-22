@@ -1,6 +1,6 @@
 package com.hansol.tofu.clubschedule.controller;
 
-import com.hansol.tofu.club.annotation.IsPresident;
+import com.hansol.tofu.clubmember.annotation.IsPresident;
 import com.hansol.tofu.clubschedule.ClubScheduleService;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleCreationRequestDTO;
 import com.hansol.tofu.clubschedule.domain.dto.ClubScheduleEditRequestDTO;

@@ -28,7 +28,7 @@ public class ApplicantService {
 
 	public void addApplicant(ClubScheduleEntity clubScheduleEntity) {
 
-		var memberEntity = memberRepository.findByIdAndMemberStatus(
+		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(
 				SecurityUtils.getCurrentUserId(),
 				MemberStatus.ACTIVATE)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
@@ -46,7 +46,7 @@ public class ApplicantService {
 	}
 
 	public void cancelApplicant(ClubScheduleEntity clubScheduleEntity) {
-		var memberEntity = memberRepository.findByIdAndMemberStatus(
+		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(
 				SecurityUtils.getCurrentUserId(),
 				MemberStatus.ACTIVATE)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));

@@ -11,7 +11,9 @@ public record ClubScheduleEditRequestDTO(
         String title,
         String content,
         @Future(message = "현재 시간 이후의 일정만 등록할 수 있습니다")
-        LocalDateTime eventAt
+        LocalDateTime eventAt,
+		Double latitude,
+		Double longitude
 ) {
     @Builder
     public ClubScheduleEditRequestDTO {

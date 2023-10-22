@@ -27,7 +27,7 @@ public class CommentService {
 
     public Long addComment(Long boardId, CommentCreationRequestDTO commentCreationRequestDTO) {
         Long memberId = SecurityUtils.getCurrentUserId();
-        var memberEntity = memberRepository.findByIdAndMemberStatus(memberId, ACTIVATE)
+        var memberEntity = memberRepository.findMemberByIdAndMemberStatus(memberId, ACTIVATE)
                 .orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
         var boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BaseException(NOT_FOUND_BOARD));

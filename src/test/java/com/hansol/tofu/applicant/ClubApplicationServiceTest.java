@@ -10,12 +10,17 @@ import java.time.ZonedDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.hansol.tofu.clubschedule.ClubScheduleService;
 import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.mock.WithMockCustomUser;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration
 class ClubApplicationServiceTest {
 
 	private ClubApplicationService sut;

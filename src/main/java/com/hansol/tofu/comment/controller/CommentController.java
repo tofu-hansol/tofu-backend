@@ -1,6 +1,6 @@
 package com.hansol.tofu.comment.controller;
 
-import com.hansol.tofu.club.annotation.IsMember;
+import com.hansol.tofu.clubmember.annotation.IsMember;
 import com.hansol.tofu.comment.CommentService;
 import com.hansol.tofu.comment.domain.dto.CommentCreationRequestDTO;
 import com.hansol.tofu.comment.domain.dto.CommentEditRequestDTO;
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "applicant", description = "동호회 댓글 API")
+@Tag(name = "comment", description = "동호회 댓글 API")
 @RestController
 @RequestMapping("/api/clubs")
 @RequiredArgsConstructor

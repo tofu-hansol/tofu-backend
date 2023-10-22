@@ -3,6 +3,8 @@ package com.hansol.tofu.club.domain.entity;
 import com.hansol.tofu.category.domain.CategoryEntity;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.enums.ClubStatus;
+import com.hansol.tofu.global.TimeEntity;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,7 +18,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Table(name = "club")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ClubEntity {
+public class ClubEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

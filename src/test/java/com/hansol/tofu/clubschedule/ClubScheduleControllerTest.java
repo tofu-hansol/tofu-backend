@@ -44,6 +44,8 @@ public class ClubScheduleControllerTest {
                 .eventAt(LocalDateTime.now().plusHours(1L))
                 .title("한솔두부")
                 .content("한솔두부모임")
+				.latitude(37.123456)
+				.longitude(127.123456)
                 .build();
 
         client.perform(post("/api/clubs/{clubId}/schedules", 1L)
@@ -60,6 +62,8 @@ public class ClubScheduleControllerTest {
                 .eventAt(LocalDateTime.now().minusHours(1))
                 .title("한솔두부")
                 .content("한솔두부모임")
+				.latitude(37.123456)
+				.longitude(127.123456)
                 .build();
 
 
@@ -78,6 +82,8 @@ public class ClubScheduleControllerTest {
                 .eventAt(newEventAt)
                 .title("변경된한솔두부모임")
                 .content("변경된한솔두부모임입니다")
+				.latitude(37.123456)
+				.longitude(127.123456)
                 .build();
 
         client.perform(patch("/api/clubs/{clubId}/schedules/2", 1L)

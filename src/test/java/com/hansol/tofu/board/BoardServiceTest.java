@@ -46,7 +46,7 @@ class BoardServiceTest {
         var boardCreationRequestDTO = BoardCreationRequestDTO.builder().build();
         var memberEntity = MemberEntity.builder().build();
         var boardEntity = boardCreationRequestDTO.toEntity(memberEntity);
-        when(memberRepository.findByIdAndMemberStatus(memberId, MemberStatus.ACTIVATE))
+        when(memberRepository.findMemberByIdAndMemberStatus(memberId, MemberStatus.ACTIVATE))
                 .thenReturn(Optional.of(memberEntity));
         when(boardRepository.save(boardEntity)).thenReturn(boardEntity);
 

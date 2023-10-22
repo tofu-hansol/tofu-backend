@@ -4,6 +4,8 @@ import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.sql.SQLException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,12 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hansol.tofu.category.repository.CategoryRepository;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
-import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
-import com.hansol.tofu.club.repository.ClubMemberRepository;
+import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
 import com.hansol.tofu.club.repository.ClubRepository;
+import com.hansol.tofu.clubmember.ClubAuthorityService;
 import com.hansol.tofu.error.BaseException;
-import com.hansol.tofu.global.SecurityUtils;
-import com.hansol.tofu.member.repository.MemberRepository;
 import com.hansol.tofu.upload.image.StorageService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,18 @@ import lombok.RequiredArgsConstructor;
 @Transactional(rollbackFor = SQLException.class)
 public class ClubService {
 
-	// TODO: ClubMemberService 등 따로 회원, 클럽 관련 서비스 분리
 	private final ClubRepository clubRepository;
 	private final CategoryRepository categoryRepository;
 	private final StorageService storageService;
-	private final ClubMemberRepository clubMemberRepository;
-	private final MemberRepository memberRepository;
+
+	public Page<ClubResponseDTO> getClubListBy(Long categoryId, Pageable pageable) {
+		long count = clubRepository.count();
+
+		if (count == 0) {
+			return Page.empty();
+		}
+		return clubRepository.findClubListBy(categoryId, pageable);
+	}
 
 	public Long addClub(ClubCreationRequestDTO clubRequestDTO) {
 		var categoryEntity = categoryRepository.findById(clubRequestDTO.categoryId())
@@ -71,49 +77,4 @@ public class ClubService {
 
 		return clubId;
 	}
-
-	// TDOO : 요청시 중복된 요청이 있는지 확인 필요
-	public Long requestJoinClub(Long clubId) {
-		Long memberId = SecurityUtils.getCurrentUserId();
-		var memberEntity = memberRepository.findById(memberId)
-			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
-
-		var clubEntity = clubRepository.findById(clubId)
-			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
-
-		var clubMemberEntity = ClubMemberEntity.builder()
-			.member(memberEntity)
-			.club(clubEntity)
-			.build();
-
-		return clubMemberRepository.save(clubMemberEntity).getId();
-	}
-
-	public Long cancelJoinClub(Long clubId) {
-		Long memberId = SecurityUtils.getCurrentUserId();
-
-		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
-			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
-		clubMemberRepository.deleteById(clubMemberEntity.getId());
-
-		return clubMemberEntity.getId();
-	}
-
-	public Long acceptJoinClub(Long clubId, Long memberId) {
-		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
-			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
-		clubMemberEntity.accept();
-
-		return clubMemberEntity.getId();
-	}
-
-	public Long rejectJoinClub(Long clubId, Long memberId) {
-		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
-			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
-		clubMemberEntity.reject();
-
-		return clubMemberEntity.getId();
-	}
-
-
 }

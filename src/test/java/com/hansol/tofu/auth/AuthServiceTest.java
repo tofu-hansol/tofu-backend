@@ -3,7 +3,7 @@ package com.hansol.tofu.auth;
 import com.hansol.tofu.auth.domain.dto.LoginRequestDTO;
 import com.hansol.tofu.auth.filter.jwt.JwtTokenProvider;
 import com.hansol.tofu.auth.filter.jwt.dto.JwtTokenDTO;
-import com.hansol.tofu.club.repository.ClubMemberRepository;
+import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.MemberService;
 import com.hansol.tofu.member.domain.MemberEntity;

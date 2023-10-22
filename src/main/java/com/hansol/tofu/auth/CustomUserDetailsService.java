@@ -1,9 +1,8 @@
 package com.hansol.tofu.auth;
 
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
-import com.hansol.tofu.club.domain.entity.ClubMemberEntity;
-import com.hansol.tofu.club.repository.ClubMemberRepository;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

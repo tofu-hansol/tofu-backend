@@ -33,8 +33,7 @@ public class ClubScheduleService {
 		var clubEntity = clubRepository.findById(clubId)
 				.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 
-		var clubScheduleEntity = clubScheduleCreationRequestDTO
-				.toEntity(clubScheduleCreationRequestDTO, clubEntity);
+		var clubScheduleEntity = clubScheduleCreationRequestDTO.toEntity(clubEntity);
 
 		return clubScheduleRepository.save(clubScheduleEntity).getId();
 	}

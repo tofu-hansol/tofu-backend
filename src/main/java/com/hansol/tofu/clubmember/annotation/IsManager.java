@@ -1,4 +1,4 @@
-package com.hansol.tofu.club.annotation;
+package com.hansol.tofu.clubmember.annotation;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 

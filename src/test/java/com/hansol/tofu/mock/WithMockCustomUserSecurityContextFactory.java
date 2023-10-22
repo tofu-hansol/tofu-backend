@@ -1,7 +1,7 @@
 package com.hansol.tofu.mock;
 
 import com.hansol.tofu.auth.domain.model.CustomUserDetails;
-import com.hansol.tofu.club.domain.dto.ClubAuthorizationDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubAuthorizationDTO;
 import com.hansol.tofu.club.enums.ClubRole;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;

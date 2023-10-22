@@ -15,17 +15,21 @@ public record ClubScheduleCreationRequestDTO(
         String title,
         String content,
         @Future(message = "현재 시간 이후의 일정만 등록할 수 있습니다")
-        LocalDateTime eventAt
+        LocalDateTime eventAt,
+		Double latitude,
+		Double longitude
 ) {
     @Builder
     public ClubScheduleCreationRequestDTO {
     }
 
-    public ClubScheduleEntity toEntity(ClubScheduleCreationRequestDTO schedule, ClubEntity club) {
+    public ClubScheduleEntity toEntity(ClubEntity club) {
         return ClubScheduleEntity.builder()
-                .title(schedule.title())
-                .content(schedule.content())
-                .eventAt(ZonedDateTime.of(schedule.eventAt(), ZoneId.of("Asia/Seoul")))
+                .title(this.title)
+                .placeName(this.content)
+                .eventAt(ZonedDateTime.of(this.eventAt(), ZoneId.of("Asia/Seoul")))
+				.latitude(this.latitude)
+				.longitude(this.longitude)
                 .club(club)
                 .build();
     }
