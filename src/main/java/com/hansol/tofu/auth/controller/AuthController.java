@@ -58,8 +58,8 @@ public class AuthController {
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
 	@GetMapping("/verify-email")
-	public BaseHttpResponse<?> completeAccountVerification(@RequestParam String code) {
+	public BaseHttpResponse<String> completeAccountVerification(@RequestParam String code) {
 		authService.completeAccountVerification(code);
-		return BaseHttpResponse.successWithNoContent();
+		return BaseHttpResponse.success("가입인증이 완료되었습니다.");
 	}
 }
