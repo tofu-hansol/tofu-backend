@@ -25,6 +25,11 @@ public class ClubAuthorizationLogic {
      */
     public boolean decide(MethodSecurityExpressionOperations root, Long clubId, ClubRole clubRole) {
         var userPrincipal = (CustomUserDetails) root.getAuthentication().getPrincipal();
+
+		if(userPrincipal.getRoles().contains("ROLE_ADMIN")) {
+			return true;
+		}
+
         if (isSufficientAuthority(userPrincipal, clubId, clubRole)) {
             return true;
         }
