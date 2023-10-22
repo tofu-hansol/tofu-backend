@@ -1,13 +1,6 @@
 package com.hansol.tofu.upload.image;
 
-import com.amazonaws.SdkClientException;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.hansol.tofu.error.BaseException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +8,19 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.hansol.tofu.error.ErrorCode.FAILED_TO_UPLOAD;
-import static com.hansol.tofu.error.ErrorCode.INVALID_FILETYPE;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.hansol.tofu.error.BaseException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -67,15 +71,14 @@ public class ObjectStorageServiceImpl implements StorageService {
 
     @Override
     public Boolean deleteImage(String key) {
-//        try {
-//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(component.getBucket(), key);
-//            amazonS3.deleteObject(deleteObjectRequest);
-//
-//            return true;
-//        } catch (Exception e) {
-//            throw new BaseException(FAILED_TO_UPLOAD);
-//        }
-        return true;
+       try {
+           DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(component.getBucketName(), key);
+           amazonS3.deleteObject(deleteObjectRequest);
+
+           return true;
+       } catch (Exception e) {
+           throw new BaseException(FAILED_TO_UPLOAD);
+       }
     }
 
     // ========== internal use ========== //
@@ -93,12 +96,12 @@ public class ObjectStorageServiceImpl implements StorageService {
     }
 
     private void uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String pathWithName) {
-//        amazonS3.putObject(new PutObjectRequest(component.getBucket(), pathWithName, inputStream, objectMetadata)
-//                .withCannedAcl(CannedAccessControlList.PublicRead));
+       amazonS3.putObject(new PutObjectRequest(component.getBucketName(), pathWithName, inputStream, objectMetadata)
+               .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
     private String getFileUrl(String pathWithName) {
-//        return amazonS3.getUrl(component.getBucket(), pathWithName).toString();
-        return "";
+       return amazonS3.getUrl(component.getBucketName(), pathWithName).toString();
+        // return "";
     }
 }
