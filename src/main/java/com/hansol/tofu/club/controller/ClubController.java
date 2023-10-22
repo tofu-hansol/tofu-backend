@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.club.ClubService;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
+import com.hansol.tofu.club.domain.dto.ClubDetailResponseDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
 import com.hansol.tofu.clubmember.annotation.IsPresident;
@@ -79,12 +80,18 @@ public class ClubController {
 		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
 	}
 
-	@Operation(summary = "동호회 정보 조회 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 정보 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	@Operation(summary = "동호회 목록 조회 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 목록 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
 	})
 	@GetMapping
 	public BaseHttpResponse<Page<ClubResponseDTO>> getClubList(@RequestParam Long categoryId, Pageable pageable) {
 		return BaseHttpResponse.success(clubService.getClubListBy(categoryId, pageable));
 	}
+
+	@GetMapping("/{clubId}")
+	public BaseHttpResponse<ClubDetailResponseDTO> getClubDetail(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(clubService.getClubDetail(clubId));
+	}
+
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.category.repository.CategoryRepository;
 import com.hansol.tofu.club.domain.dto.ClubCreationRequestDTO;
+import com.hansol.tofu.club.domain.dto.ClubDetailResponseDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
 import com.hansol.tofu.club.repository.ClubRepository;
@@ -30,6 +31,7 @@ public class ClubService {
 	private final CategoryRepository categoryRepository;
 	private final StorageService storageService;
 
+	@Transactional(readOnly = true)
 	public Page<ClubResponseDTO> getClubListBy(Long categoryId, Pageable pageable) {
 		long count = clubRepository.count();
 
@@ -37,6 +39,11 @@ public class ClubService {
 			return Page.empty();
 		}
 		return clubRepository.findClubListBy(categoryId, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public ClubDetailResponseDTO getClubDetail(Long clubId) {
+		return clubRepository.findClubDetail(clubId).orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 	}
 
 	public Long addClub(ClubCreationRequestDTO clubRequestDTO) {
