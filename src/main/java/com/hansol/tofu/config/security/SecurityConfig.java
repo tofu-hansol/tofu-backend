@@ -47,7 +47,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring()
 			.requestMatchers("/", "/promotion", "/api/auth/**", "/favicon.ico",
-				"/images1/**",
+				"/images/**",
 				"/api/depts/**", "/api/company/**",
 				"/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
 	}
@@ -89,7 +89,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(
 			(authorize) -> authorize
 					.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-					.requestMatchers("/", "/promotion", "/favicon.ico", "/images1/**").permitAll()
+					.requestMatchers("/", "/promotion", "/favicon.ico", "/images/**").permitAll()
 					.requestMatchers("/api/depts/**", "/api/company/**").permitAll()
 					.requestMatchers("/api/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated()
