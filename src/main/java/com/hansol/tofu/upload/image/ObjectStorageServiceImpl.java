@@ -28,6 +28,8 @@ public class ObjectStorageServiceImpl implements StorageService {
 
     private final AmazonS3 amazonS3;
     private final S3Component component;
+	public static final String CDN_URL = "http://qefsedhmghte20150888.cdn.ntruss.com/";
+	public static final String OPTIMIZE_RULE = "?type=m&w=1024&h=1024&quality=80";
 
     @Override
     public String uploadImage(MultipartFile file, String folderName) {
@@ -101,7 +103,6 @@ public class ObjectStorageServiceImpl implements StorageService {
     }
 
     private String getFileUrl(String pathWithName) {
-       return amazonS3.getUrl(component.getBucketName(), pathWithName).toString();
-        // return "";
+       return CDN_URL + pathWithName + OPTIMIZE_RULE;
     }
 }
