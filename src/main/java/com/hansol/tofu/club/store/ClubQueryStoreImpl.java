@@ -42,7 +42,8 @@ public class ClubQueryStoreImpl implements ClubQueryStore {
 					.from(clubMemberEntity)
 					.where(clubMemberEntity.clubJoinStatus.eq(ClubJoinStatus.ACCEPTED)
 						.and(clubMemberEntity.club.id.eq(clubEntity.id))), "memberCount"),
-				clubEntity.createdAt
+				clubEntity.createdAt,
+				clubEntity.description
 			))
 			.from(clubEntity)
 			.where(clubEntity.category.id.eq(categoryId))
