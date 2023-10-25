@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BoardRepository extends JpaRepository<BoardEntity, Long>, BoardQueryStore {
 
 	Page<BoardResponseDTO> findFeaturedBoardPages(Pageable pageable);
+	Page<BoardResponseDTO> findClubBoardPages(Long clubId, Pageable pageable);
 }

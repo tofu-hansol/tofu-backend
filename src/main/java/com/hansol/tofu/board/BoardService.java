@@ -35,6 +35,11 @@ public class BoardService {
 		return boardRepository.findFeaturedBoardPages(pageable);
 	}
 
+	@Transactional(readOnly = true)
+	public Page<BoardResponseDTO> getClubBoardPages(Long clubId, Pageable pageable) {
+		return boardRepository.findClubBoardPages(clubId, pageable);
+	}
+
 	public Long addBoard(Long clubId, BoardCreationRequestDTO boardCreationRequestDTO) {
 		Long memberId = SecurityUtils.getCurrentUserId();
 		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(memberId, ACTIVATE)
