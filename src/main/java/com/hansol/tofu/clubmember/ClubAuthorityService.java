@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubMemberResponseDTO;
 import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
 import com.hansol.tofu.error.BaseException;
@@ -47,6 +48,11 @@ public class ClubAuthorityService {
 			.build();
 
 		return clubMemberRepository.save(clubMemberEntity).getId();
+	}
+
+	@Transactional(readOnly = true)
+	public List<ClubMemberResponseDTO> getClubMembers(Long clubId) {
+		return clubMemberRepository.findClubMembers(clubId);
 	}
 
 	public Long cancelJoinClub(Long clubId) {

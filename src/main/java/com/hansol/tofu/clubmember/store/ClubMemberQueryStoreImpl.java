@@ -9,9 +9,15 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubMemberResponseDTO;
 import com.hansol.tofu.clubmember.domain.dto.QClubJoinResponseDTO;
+import com.hansol.tofu.clubmember.domain.dto.QClubMemberResponseDTO;
 import com.hansol.tofu.clubmember.domain.entity.ClubMemberEntity;
 import com.hansol.tofu.clubmember.enums.ClubJoinStatus;
+import com.hansol.tofu.dept.domain.QDeptEntity;
+import com.hansol.tofu.member.domain.QMemberEntity;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -47,5 +53,26 @@ public class ClubMemberQueryStoreImpl implements ClubMemberQueryStore {
 			.where(clubMemberEntity.member.id.eq(memberId))
 			.orderBy(clubMemberEntity.createdAt.desc())
 			.fetch();
+	}
+
+	@Override
+	public List<ClubMemberResponseDTO> findClubMembers(Long clubId) {
+		QDeptEntity deptEntity = new QDeptEntity("SubDeptEntity");
+		return queryFactory.select(new QClubMemberResponseDTO(
+				clubMemberEntity.id,
+				memberEntity.id,
+				memberEntity.profileUrl,
+				ExpressionUtils.as(JPAExpressions.select(deptEntity.name)
+					.from(deptEntity)
+					.where(memberEntity.dept.id.eq(deptEntity.id)), "deptName"),
+				memberEntity.name,
+				memberEntity.userRole.stringValue(),
+				clubMemberEntity.createdAt.stringValue()))
+			.from(clubMemberEntity)
+			.leftJoin(memberEntity)
+				.on(clubMemberEntity.member.id.eq(memberEntity.id)).fetchJoin()
+			.where(clubMemberEntity.club.id.eq(clubId).and(clubMemberEntity.clubJoinStatus.eq(ClubJoinStatus.ACCEPTED)))
+			.orderBy(clubMemberEntity.createdAt.desc())
+			.fetch().stream().distinct().toList();
 	}
 }

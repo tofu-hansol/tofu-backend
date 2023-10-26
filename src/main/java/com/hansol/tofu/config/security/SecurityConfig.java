@@ -93,7 +93,7 @@ public class SecurityConfig {
 				.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 				.requestMatchers("/", "/promotion", "/favicon.ico", "/images/**").permitAll()
 				.requestMatchers(HttpMethod.GET, "/api/depts/**", "/api/company/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/api/clubs/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/clubs/**", "/api/club-authority/**").permitAll()
 				.requestMatchers("/api/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated()
 		);
