@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hansol.tofu.clubmember.ClubAuthorityService;
 import com.hansol.tofu.clubmember.annotation.IsPresident;
 import com.hansol.tofu.clubmember.domain.dto.ClubJoinResponseDTO;
+import com.hansol.tofu.clubmember.domain.dto.ClubMemberResponseDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +36,11 @@ public class ClubAuthorityController {
 		this.clubAuthorityService = clubAuthorityService;
 	}
 
+	@Operation(summary = "특정 동호회에 가입한 회원 목록 조회 API")
+	@GetMapping("/{clubId}/members")
+	public BaseHttpResponse<List<ClubMemberResponseDTO>> getClubMembers(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(clubAuthorityService.getClubMembers(clubId));
+	}
 
 	@Operation(summary = "동호회 가입 신청 API", responses = {
 		@ApiResponse(responseCode = "200", description = "동호회 가입 신청 성공", content = @Content(schema = @Schema(implementation = Long.class))),
@@ -74,6 +80,7 @@ public class ClubAuthorityController {
 		return BaseHttpResponse.success(clubAuthorityService.rejectJoinClub(clubId, memberId));
 	}
 
+	@Operation(summary = "특정 유저가 소속된 동호회 조회 API")
 	@GetMapping("/{memberId}")
 	public BaseHttpResponse<List<ClubJoinResponseDTO>> getJoinedClubList(@PathVariable Long memberId) {
 		return BaseHttpResponse.success(clubAuthorityService.getJoinedClubList(memberId));
