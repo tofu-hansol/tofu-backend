@@ -2,6 +2,7 @@ package com.hansol.tofu.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.hansol.tofu.auth.CustomUserDetailsService;
 import com.hansol.tofu.auth.filter.jwt.JwtAccessDeniedHandler;
@@ -88,10 +90,11 @@ public class SecurityConfig {
 		 */
 		http.authorizeHttpRequests(
 			(authorize) -> authorize
-					.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-					.requestMatchers("/", "/promotion", "/favicon.ico", "/images/**").permitAll()
-					.requestMatchers("/api/depts/**", "/api/company/**").permitAll()
-					.requestMatchers("/api/admin/**").hasRole("ADMIN")
+				.requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+				.requestMatchers("/", "/promotion", "/favicon.ico", "/images/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/depts/**", "/api/company/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/clubs/**").permitAll()
+				.requestMatchers("/api/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated()
 		);
 

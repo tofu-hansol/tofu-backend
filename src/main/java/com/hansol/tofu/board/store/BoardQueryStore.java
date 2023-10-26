@@ -9,4 +9,6 @@ public interface BoardQueryStore {
 
 	Page<BoardResponseDTO> findFeaturedBoardPages(Pageable pageable);
 
+	Page<BoardResponseDTO> findClubBoardPages(Long clubId, Pageable pageable);
+
 }

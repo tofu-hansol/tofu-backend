@@ -16,6 +16,7 @@ public record BoardResponseDTO(
 	String memberName,
 	String title,
 	String content,
+	int commentCount,
 	ZonedDateTime createdAt,
 	ZonedDateTime updatedAt,
 	List<ClubPhotoResponseDTO> photoList
