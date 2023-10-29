@@ -8,7 +8,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
 import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.clubphoto.repository.ClubPhotoRepository;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.upload.image.StorageService;
@@ -22,6 +24,11 @@ public class ClubPhotoService {
 
 	private final ClubPhotoRepository clubPhotoRepository;
 	private final StorageService storageService;
+
+	@Transactional(readOnly = true)
+	public List<ClubPhotoEntity> findClubPhotoByBoardIdIn(List<Long> boardIds) {
+		return clubPhotoRepository.findByBoardIdIn(boardIds);
+	}
 
 	public void savePhotos(List<ClubPhotoRequestDTO> clubPhotoRequestDTOs) {
 		createPhotos(clubPhotoRequestDTOs);

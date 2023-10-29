@@ -1,12 +1,16 @@
 package com.hansol.tofu.applicant.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hansol.tofu.applicant.ClubApplicationService;
+import com.hansol.tofu.applicant.domain.dto.ClubApplicationResponseDTO;
 import com.hansol.tofu.clubmember.annotation.IsMember;
 import com.hansol.tofu.global.BaseHttpResponse;
 
@@ -45,5 +49,11 @@ public class ClubApplicationController {
 	@DeleteMapping("/{clubId}/schedules/{scheduleId}/applicants")
 	public void cancelClubSchedule(@PathVariable Long clubId, @PathVariable Long scheduleId) {
 		clubApplicationService.cancelClubSchedule(clubId, scheduleId);
+	}
+
+	@Operation(summary = "3개월 이내 동호회 모임일정 조회 API")
+	@GetMapping("/{clubId}/schedules")
+	public BaseHttpResponse<List<ClubApplicationResponseDTO>> getClubSchedules(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(clubApplicationService.getClubSchedules(clubId));
 	}
 }

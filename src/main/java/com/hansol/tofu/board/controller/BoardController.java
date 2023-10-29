@@ -1,5 +1,7 @@
 package com.hansol.tofu.board.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,7 @@ import com.hansol.tofu.board.domain.dto.BoardCreationRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardEditRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardResponseDTO;
 import com.hansol.tofu.clubmember.annotation.IsMember;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,6 +90,13 @@ public class BoardController {
 	public BaseHttpResponse<Page<BoardResponseDTO>> getClubBoards(@PathVariable Long clubId, Pageable pageable) {
 		return BaseHttpResponse.success(boardService.getClubBoardPages(clubId, pageable));
 	}
+
+	@Operation(summary = "특정 동호회 게시글 내 모든 사진 목록 조회 API")
+	@GetMapping("/{clubId}/boards/photos")
+	public BaseHttpResponse<List<ClubPhotoResponseDTO>> getClubBoardPhotos(@PathVariable Long clubId) {
+		return BaseHttpResponse.success(boardService.getClubPhotos(clubId));
+	}
+
 
 
 }

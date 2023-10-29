@@ -1,9 +1,12 @@
 package com.hansol.tofu.comment.controller;
 
+import java.util.List;
+
 import com.hansol.tofu.clubmember.annotation.IsMember;
 import com.hansol.tofu.comment.CommentService;
 import com.hansol.tofu.comment.domain.dto.CommentCreationRequestDTO;
 import com.hansol.tofu.comment.domain.dto.CommentEditRequestDTO;
+import com.hansol.tofu.comment.domain.dto.CommentResponseDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -72,6 +75,21 @@ public class CommentController {
         commentService.deleteComment(boardId, commentId);
 		return BaseHttpResponse.successWithNoContent();
     }
+
+	@Operation(summary = "동호회 댓글 목록 조회 API", responses = {
+			@ApiResponse(responseCode = "200", description = "동호회 댓글 목록 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+			@ApiResponse(responseCode = "400", description = "입력정보 누락(내용, 내용)", content = @Content(schema = @Schema(implementation = Long.class))),
+			@ApiResponse(responseCode = "403", description = "본인이 아닌 다른 회원 댓글 삭제 시도", content = @Content(schema = @Schema(implementation = Long.class))),
+			@ApiResponse(responseCode = "404", description = "존재하지 않는 댓글", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	})
+	@GetMapping("/{clubId}/boards/{boardId}/comments")
+	public BaseHttpResponse<List<CommentResponseDTO>> getComments(
+			@PathVariable Long clubId,
+			@PathVariable Long boardId
+	) {
+		return BaseHttpResponse.success(commentService.getComments(boardId));
+	}
+
 
 
 }
