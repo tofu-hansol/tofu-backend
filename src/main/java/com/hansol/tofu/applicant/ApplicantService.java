@@ -26,6 +26,12 @@ public class ApplicantService {
 	private final ApplicantRepository applicantRepository;
 	private final MemberRepository memberRepository;
 
+
+	@Transactional(readOnly = true)
+	public int countApplicants(Long clubScheduleId) {
+		return applicantRepository.countByClubScheduleId(clubScheduleId);
+	}
+
 	public void addApplicant(ClubScheduleEntity clubScheduleEntity) {
 
 		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(

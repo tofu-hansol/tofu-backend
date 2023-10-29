@@ -42,7 +42,7 @@ class ClubApplicationServiceTest {
 		var clubScheduleEntity = ClubScheduleEntity.builder()
 			.eventAt(ZonedDateTime.of(LocalDateTime.now().plusDays(1), ZoneId.of("Asia/Seoul")))
 			.build();
-		when(clubScheduleService.findClubScheduleBy(scheduleId)).thenReturn(clubScheduleEntity);
+		when(clubScheduleService.findClubSchedule(scheduleId)).thenReturn(clubScheduleEntity);
 
 
 		sut.applyClubSchedule(3L, scheduleId);
@@ -58,7 +58,7 @@ class ClubApplicationServiceTest {
 		var clubScheduleEntity = ClubScheduleEntity.builder()
 			.eventAt(ZonedDateTime.of(LocalDateTime.now().minusDays(1), ZoneId.of("Asia/Seoul")))
 			.build();
-		when(clubScheduleService.findClubScheduleBy(scheduleId)).thenReturn(clubScheduleEntity);
+		when(clubScheduleService.findClubSchedule(scheduleId)).thenReturn(clubScheduleEntity);
 
 
 		var exception = Assertions.assertThrows(BaseException.class, () -> sut.applyClubSchedule(3L, scheduleId));
@@ -74,7 +74,7 @@ class ClubApplicationServiceTest {
 		var clubScheduleEntity = ClubScheduleEntity.builder()
 			.eventAt(ZonedDateTime.of(LocalDateTime.now().minusDays(1), ZoneId.of("Asia/Seoul")))
 			.build();
-		when(clubScheduleService.findClubScheduleBy(scheduleId)).thenReturn(clubScheduleEntity);
+		when(clubScheduleService.findClubSchedule(scheduleId)).thenReturn(clubScheduleEntity);
 
 
 		sut.cancelClubSchedule(3L, scheduleId);
@@ -87,7 +87,7 @@ class ClubApplicationServiceTest {
 	@WithMockCustomUser(username = "lisa@test.com")
 	void cancelClubSchedule_존재하지_않는_모임일정에_참여취소할때_예외가_발생한다() throws Exception {
 		Long scheduleId = 1L;
-		when(clubScheduleService.findClubScheduleBy(scheduleId)).thenThrow(new BaseException(NOT_FOUND_CLUB_SCHEDULE));
+		when(clubScheduleService.findClubSchedule(scheduleId)).thenThrow(new BaseException(NOT_FOUND_CLUB_SCHEDULE));
 
 
 		var exception = Assertions.assertThrows(BaseException.class, () -> sut.cancelClubSchedule(3L, scheduleId));

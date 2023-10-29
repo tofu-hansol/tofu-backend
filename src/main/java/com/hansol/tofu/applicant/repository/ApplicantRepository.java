@@ -13,4 +13,6 @@ public interface ApplicantRepository extends JpaRepository<ApplicantEntity, Long
 	boolean existsByMemberAndClubSchedule(MemberEntity memberEntity, ClubScheduleEntity clubScheduleEntity);
 
 	Optional<ApplicantEntity> findByMemberAndClubSchedule(MemberEntity member, ClubScheduleEntity clubScheduleEntity);
+
+	int countByClubScheduleId(Long clubScheduleId);
 }

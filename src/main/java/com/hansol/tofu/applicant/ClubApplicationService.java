@@ -4,10 +4,13 @@ import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hansol.tofu.applicant.domain.dto.ClubApplicationResponseDTO;
 import com.hansol.tofu.clubschedule.ClubScheduleService;
 import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.error.BaseException;
@@ -22,9 +25,21 @@ public class ClubApplicationService {
 	private final ApplicantService applicantService;
 	private final ClubScheduleService clubScheduleService;
 
-	public void applyClubSchedule(Long clubId, Long scheduleId) {
+	@Transactional(readOnly = true)
+	public List<ClubApplicationResponseDTO> getClubSchedules(Long clubId) {
+		var clubScheduleEntityList = clubScheduleService.findClubSchedulesWithin(clubId, 3);
 
-		var clubScheduleEntity = clubScheduleService.findClubScheduleBy(scheduleId);
+		var clubApplicationResponseDTOList = clubScheduleEntityList.stream()
+			.map(clubSchedule ->
+				ClubApplicationResponseDTO.of(clubSchedule, applicantService.countApplicants(clubSchedule.getId()))
+		).collect(Collectors.toList());
+
+		return clubApplicationResponseDTOList;
+
+	}
+
+	public void applyClubSchedule(Long clubId, Long scheduleId) {
+		var clubScheduleEntity = clubScheduleService.findClubSchedule(scheduleId);
 
 		if (isAlreadyStarted(clubScheduleEntity)) {
 			throw new BaseException(ALREADY_STARTED);
@@ -34,7 +49,7 @@ public class ClubApplicationService {
 	}
 
 	public void cancelClubSchedule(Long clubId, Long scheduleId) {
-		var clubScheduleEntity = clubScheduleService.findClubScheduleBy(scheduleId);
+		var clubScheduleEntity = clubScheduleService.findClubSchedule(scheduleId);
 
 		applicantService.cancelApplicant(clubScheduleEntity);
 	}
