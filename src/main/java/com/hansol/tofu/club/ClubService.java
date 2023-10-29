@@ -3,6 +3,7 @@ package com.hansol.tofu.club;
 import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
 import com.hansol.tofu.club.repository.ClubRepository;
 import com.hansol.tofu.clubmember.ClubAuthorityService;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.upload.image.StorageService;
 
@@ -30,6 +32,7 @@ public class ClubService {
 	private final ClubRepository clubRepository;
 	private final CategoryRepository categoryRepository;
 	private final StorageService storageService;
+
 
 	@Transactional(readOnly = true)
 	public Page<ClubResponseDTO> getClubListBy(Long categoryId, Pageable pageable) {
