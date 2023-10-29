@@ -5,6 +5,9 @@ import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
 import com.hansol.tofu.member.domain.MemberEntity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 
 import java.util.List;
@@ -16,7 +19,7 @@ public record BoardCreationRequestDTO(
         @NotBlank(message = "내용을 입력해주세요")
         String content,
 
-        @RequestPart(value = "clubPhotoRequestDTOs", required = false)
+		@ModelAttribute
         List<ClubPhotoRequestDTO> clubPhotoRequestDTOs
 ) {
     @Builder
