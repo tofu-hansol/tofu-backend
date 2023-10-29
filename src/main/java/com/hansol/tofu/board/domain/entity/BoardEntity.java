@@ -18,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -60,8 +61,6 @@ public class BoardEntity extends TimeEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	private MemberEntity member;
 
-	// @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-	// private List<ClubPhotoEntity> clubPhotos = new ArrayList<>();
 
 	public void changeBoard(String title, String content) {
 		this.title = title;

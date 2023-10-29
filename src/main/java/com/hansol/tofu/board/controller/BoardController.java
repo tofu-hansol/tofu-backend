@@ -76,9 +76,17 @@ public class BoardController {
 		return BaseHttpResponse.successWithNoContent();
 	}
 
+	@Operation(summary = "홍보 게시글 조회 API")
 	@GetMapping("/boards/featured")
 	public BaseHttpResponse<Page<BoardResponseDTO>> getFeaturedBoards(Pageable pageable) {
 		return BaseHttpResponse.success(boardService.getFeaturedBoardPages(pageable));
 	}
+
+	@Operation(summary = "동호회 게시글 조회 API")
+	@GetMapping("/{clubId}/boards")
+	public BaseHttpResponse<Page<BoardResponseDTO>> getClubBoards(@PathVariable Long clubId, Pageable pageable) {
+		return BaseHttpResponse.success(boardService.getClubBoardPages(clubId, pageable));
+	}
+
 
 }
