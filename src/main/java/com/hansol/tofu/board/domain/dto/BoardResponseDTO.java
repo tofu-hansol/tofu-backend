@@ -11,6 +11,7 @@ import lombok.Builder;
 public record BoardResponseDTO(
 	Long boardId,
 	Long memberId,
+	Long clubId,
 	String memberProfileUrl,
 	String deptName,
 	String memberName,
