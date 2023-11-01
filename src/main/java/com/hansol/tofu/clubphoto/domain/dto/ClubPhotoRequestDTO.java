@@ -9,8 +9,8 @@ import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
 
 public record ClubPhotoRequestDTO(
         Long id,
-        MultipartFile image,
-        boolean isMainPhoto
+		@RequestPart
+        MultipartFile image
 ) {
     @Builder
     public ClubPhotoRequestDTO {
@@ -19,7 +19,6 @@ public record ClubPhotoRequestDTO(
     public ClubPhotoEntity toEntity(String imageUrl) {
         return ClubPhotoEntity.builder()
                 .id(this.id())
-                .isMainPhoto(this.isMainPhoto())
                 .imageUrl(imageUrl)
                 .build();
     }

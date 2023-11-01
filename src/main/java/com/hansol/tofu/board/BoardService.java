@@ -11,12 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.board.domain.dto.BoardCreationRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardEditRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardResponseDTO;
 import com.hansol.tofu.board.enums.BoardStatus;
 import com.hansol.tofu.board.repository.BoardRepository;
+import com.hansol.tofu.club.repository.ClubRepository;
+import com.hansol.tofu.clubmember.repository.ClubMemberRepository;
 import com.hansol.tofu.clubphoto.ClubPhotoService;
 import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.error.BaseException;
@@ -53,28 +56,29 @@ public class BoardService {
 		return boardRepository.findClubBoardPages(clubId, pageable);
 	}
 
-	public Long addBoard(Long clubId, BoardCreationRequestDTO boardCreationRequestDTO) {
+	public Long addBoard(Long clubId, BoardCreationRequestDTO boardCreationRequestDTO, List<MultipartFile> clubPhotoRequestDTOs) {
 		Long memberId = SecurityUtils.getCurrentUserId();
+
 		var memberEntity = memberRepository.findMemberByIdAndMemberStatus(memberId, ACTIVATE)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
-		var boardEntity = boardRepository.save(boardCreationRequestDTO.toEntity(memberEntity));
-		photoService.savePhotos(boardCreationRequestDTO.clubPhotoRequestDTOs());
+		var boardEntity = boardRepository.save(boardCreationRequestDTO.toEntity(memberEntity, clubId));
+		photoService.createPhotos(boardEntity, clubPhotoRequestDTOs);
 
 		return boardEntity.getId();
 	}
 
-	public void editBoard(Long clubId, Long boardId, BoardEditRequestDTO boardEditRequestDTO) {
-		Long memberId = SecurityUtils.getCurrentUserId();
-		var boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BaseException(NOT_FOUND_BOARD));
-
-		if (!boardEntity.getMember().getId().equals(memberId)) {
-			throw new BaseException(ACCESS_DENIED);
-		}
-
-		boardEntity.changeBoard(boardEditRequestDTO.title(), boardEditRequestDTO.content());
-		photoService.savePhotos(boardEditRequestDTO.clubPhotoRequestDTOs());
-	}
+	// public void editBoard(Long boardId, BoardEditRequestDTO boardEditRequestDTO) {
+	// 	Long memberId = SecurityUtils.getCurrentUserId();
+	// 	var boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BaseException(NOT_FOUND_BOARD));
+	//
+	// 	if (!boardEntity.getMember().getId().equals(memberId)) {
+	// 		throw new BaseException(ACCESS_DENIED);
+	// 	}
+	//
+	// 	boardEntity.changeBoard(boardEditRequestDTO.title(), boardEditRequestDTO.content());
+	// 	photoService.savePhotos(boardEditRequestDTO.clubPhotoRequestDTOs());
+	// }
 
 	public void deleteBoard(Long clubId, Long boardId) {
 		Long memberId = SecurityUtils.getCurrentUserId();

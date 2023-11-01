@@ -10,7 +10,6 @@ import lombok.Builder;
 public record ClubPhotoResponseDTO(
 		Long id,
 		String imageUrl,
-		boolean isMainPhoto,
 		ZonedDateTime createdAt
 ) {
 	@Builder
@@ -22,7 +21,6 @@ public record ClubPhotoResponseDTO(
 		return ClubPhotoResponseDTO.builder()
 			.id(clubPhoto.getId())
 			.imageUrl(clubPhoto.getImageUrl())
-			.isMainPhoto(clubPhoto.getIsMainPhoto())
 			.createdAt(clubPhoto.getCreatedAt())
 			.build();
 	}

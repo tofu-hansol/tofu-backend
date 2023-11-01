@@ -144,7 +144,6 @@ CREATE TABLE board (
 CREATE TABLE club_photo (
         id	int unsigned	PRIMARY KEY NOT NULL AUTO_INCREMENT,
         board_id	int unsigned	NOT NULL,
-        is_main_photo	tinyint(1)	NOT NULL	DEFAULT False,
         image_url	TEXT	NOT NULL,
         created_at   datetime                       not null default CURRENT_TIMESTAMP,
         updated_at    datetime                       null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,

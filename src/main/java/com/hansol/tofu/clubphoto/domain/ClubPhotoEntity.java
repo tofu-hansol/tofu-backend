@@ -36,10 +36,6 @@ public class ClubPhotoEntity extends TimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, name = "is_main_photo")
-	@ColumnDefault("0")
-	private Boolean isMainPhoto;
-
 	@Column(nullable = false, name = "image_url")
 	private String imageUrl;
 
@@ -51,13 +47,4 @@ public class ClubPhotoEntity extends TimeEntity {
 		this.imageUrl = imageUrl;
 	}
 
-	// 연관관계 편의 메서드
-	// public void setBoard(BoardEntity board) {
-	// 	if(this.board != null) {
-	// 		기존 보드가 존재한다면 관계를 끊는다.
-	// this.board.getClubPhotos().remove(this);
-	// }
-	// this.board = board;
-	// board.getClubPhotos().add(this);
-	// }
 }

@@ -54,7 +54,7 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 			.select(boardEntity, commentEntity.count(), list(clubPhotoEntity))
 			.from(boardEntity)
 			.leftJoin(clubPhotoEntity)
-			.on(boardEntity.club.id.eq(clubPhotoEntity.board.id)).fetchJoin()
+			.on(boardEntity.clubId.eq(clubPhotoEntity.board.id)).fetchJoin()
 			.leftJoin(memberEntity)
 			.on(boardEntity.member.id.eq(memberEntity.id)).fetchJoin()
 			.where(boardEntity.boardStatus.eq(BoardStatus.FEATURED))
@@ -82,7 +82,6 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 					.map(clubPhotoEntity -> ClubPhotoResponseDTO.builder()
 						.id(clubPhotoEntity.getId())
 						.imageUrl(clubPhotoEntity.getImageUrl())
-						.isMainPhoto(clubPhotoEntity.getIsMainPhoto())
 						.createdAt(clubPhotoEntity.getCreatedAt())
 						.build())
 					.collect(Collectors.toList()))
@@ -101,7 +100,7 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 		// TODO: https://jojoldu.tistory.com/529
 		List<Long> ids = queryFactory.select(boardEntity.id)
 			.from(boardEntity)
-			.where(boardEntity.club.id.eq(clubId).and(boardEntity.boardStatus.ne(BoardStatus.DELETED)))
+			.where(boardEntity.clubId.eq(clubId).and(boardEntity.boardStatus.ne(BoardStatus.DELETED)))
 			.orderBy(boardEntity.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -133,14 +132,13 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 							.and(commentEntity.board.id.eq(boardEntity.id))), "commentCount"),
 					boardEntity.createdAt,
 					boardEntity.updatedAt,
-					list(new QClubPhotoResponseDTO(clubPhotoEntity.id, clubPhotoEntity.imageUrl,
-						clubPhotoEntity.isMainPhoto, clubPhotoEntity.createdAt))
+					list(new QClubPhotoResponseDTO(clubPhotoEntity.id, clubPhotoEntity.imageUrl, clubPhotoEntity.createdAt))
 				))
 			);
 
 		JPAQuery<Long> countQuery = queryFactory.select(boardEntity.id.count())
 			.from(boardEntity)
-			.where(boardEntity.club.id.eq(clubId).and(boardEntity.boardStatus.ne(BoardStatus.DELETED)));
+			.where(boardEntity.clubId.eq(clubId).and(boardEntity.boardStatus.ne(BoardStatus.DELETED)));
 
 		List<BoardResponseDTO> boardResponseDTOList = transform.values().stream().collect(Collectors.toList());
 
