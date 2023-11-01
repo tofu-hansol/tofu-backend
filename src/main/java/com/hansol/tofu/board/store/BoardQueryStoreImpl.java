@@ -1,15 +1,12 @@
 package com.hansol.tofu.board.store;
 
 import static com.hansol.tofu.board.domain.entity.QBoardEntity.*;
-import static com.hansol.tofu.club.domain.entity.QClubEntity.*;
-import static com.hansol.tofu.clubmember.domain.entity.QClubMemberEntity.*;
 import static com.hansol.tofu.clubphoto.domain.QClubPhotoEntity.*;
 import static com.hansol.tofu.comment.domain.entity.QCommentEntity.*;
 import static com.hansol.tofu.dept.domain.QDeptEntity.*;
 import static com.hansol.tofu.member.domain.QMemberEntity.*;
 import static com.querydsl.core.group.GroupBy.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,18 +19,12 @@ import org.springframework.stereotype.Repository;
 import com.hansol.tofu.board.domain.dto.BoardResponseDTO;
 import com.hansol.tofu.board.domain.dto.QBoardResponseDTO;
 import com.hansol.tofu.board.domain.entity.BoardEntity;
-import com.hansol.tofu.board.domain.entity.QBoardEntity;
 import com.hansol.tofu.board.enums.BoardStatus;
-import com.hansol.tofu.clubmember.enums.ClubJoinStatus;
 import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
 import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.clubphoto.domain.dto.QClubPhotoResponseDTO;
-import com.hansol.tofu.comment.domain.entity.CommentEntity;
 import com.hansol.tofu.comment.domain.entity.QCommentEntity;
 import com.hansol.tofu.comment.enums.CommentStatus;
-import com.hansol.tofu.dept.domain.QDeptEntity;
-import com.hansol.tofu.member.domain.QMemberEntity;
-import com.hansol.tofu.member.enums.MemberStatus;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -71,6 +62,7 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 			.map(entry -> BoardResponseDTO.builder()
 				.boardId(entry.getKey().getId())
 				.memberId(entry.getKey().getMember().getId())
+				.clubId(entry.getKey().getClubId())
 				.memberProfileUrl(entry.getKey().getMember().getProfileUrl())
 				.deptName(entry.getKey().getMember().getDept().getName())
 				.memberName(entry.getKey().getMember().getName())
@@ -121,6 +113,7 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 				.as(new QBoardResponseDTO(
 					boardEntity.id,
 					memberEntity.id,
+					boardEntity.clubId,
 					memberEntity.profileUrl,
 					deptEntity.name,
 					memberEntity.name,

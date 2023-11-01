@@ -43,6 +43,7 @@ public class BoardService {
 
 		return photoService.findClubPhotoByBoardIdIn(boardIds).stream()
 			.map(ClubPhotoResponseDTO::of)
+			.sorted((o1, o2) -> o2.createdAt().compareTo(o1.createdAt()))
 			.collect(Collectors.toList());
 	}
 
