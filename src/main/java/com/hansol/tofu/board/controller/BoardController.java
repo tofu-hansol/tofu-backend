@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hansol.tofu.board.BoardService;
 import com.hansol.tofu.board.domain.dto.BoardCreationRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardEditRequestDTO;
 import com.hansol.tofu.board.domain.dto.BoardResponseDTO;
 import com.hansol.tofu.clubmember.annotation.IsMember;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
 import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.global.BaseHttpResponse;
 
@@ -50,26 +52,27 @@ public class BoardController {
 	@PostMapping(value ="/{clubId}/boards", consumes = "multipart/form-data")
 	public BaseHttpResponse<Long> addBoard(
 		@PathVariable Long clubId,
-		@ModelAttribute @Valid BoardCreationRequestDTO boardCreationRequestDTO
+		@ModelAttribute @Valid BoardCreationRequestDTO boardCreationRequestDTO,
+		@RequestPart List<MultipartFile> clubPhotoRequestDTOList
 	) {
-		return BaseHttpResponse.success(boardService.addBoard(clubId, boardCreationRequestDTO));
+		return BaseHttpResponse.success(boardService.addBoard(clubId, boardCreationRequestDTO, clubPhotoRequestDTOList));
 	}
 
-	@Operation(summary = "동호회 게시글 수정 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "400", description = "입력정보 누락(제목, 내용)", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "403", description = "본인이 아닌 다른 회원 게시글 수정 시도", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 게시글", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@IsMember
-	@PatchMapping("/{clubId}/boards/{boardId}")
-	public BaseHttpResponse<?> editBoard(
-		@PathVariable Long clubId,
-		@PathVariable Long boardId,
-		@RequestPart @Valid BoardEditRequestDTO boardEditRequestDTO) {
-		boardService.editBoard(clubId, boardId, boardEditRequestDTO);
-		return BaseHttpResponse.successWithNoContent();
-	}
+	// @Operation(summary = "동호회 게시글 수정 API", responses = {
+	// 	@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "400", description = "입력정보 누락(제목, 내용)", content = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "403", description = "본인이 아닌 다른 회원 게시글 수정 시도", content = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "404", description = "존재하지 않는 게시글", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	// })
+	// @IsMember
+	// @PatchMapping("/{clubId}/boards/{boardId}")
+	// public BaseHttpResponse<?> editBoard(
+	// 	@PathVariable Long clubId,
+	// 	@PathVariable Long boardId,
+	// 	@RequestPart @Valid BoardEditRequestDTO boardEditRequestDTO) {
+	// 	boardService.editBoard(clubId, boardId, boardEditRequestDTO);
+	// 	return BaseHttpResponse.successWithNoContent();
+	// }
 
 	@Operation(summary = "동호회 게시글 삭제 API", responses = {
 		@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),

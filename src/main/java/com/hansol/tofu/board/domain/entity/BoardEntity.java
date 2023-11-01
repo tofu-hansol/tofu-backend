@@ -53,9 +53,12 @@ public class BoardEntity extends TimeEntity {
 	@ColumnDefault("PUBLISHED")
 	private BoardStatus boardStatus;
 
-	@JoinColumn(name = "club_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private ClubEntity club;
+	// @JoinColumn(name = "club_id")
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// private ClubEntity club;
+
+	@Column(name = "club_id", nullable = false)
+	private Long clubId;
 
 	@JoinColumn(name = "member_id")
 	@OneToOne(fetch = FetchType.LAZY)

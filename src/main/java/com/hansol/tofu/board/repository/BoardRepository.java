@@ -18,6 +18,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long>, Board
 	Page<BoardResponseDTO> findFeaturedBoardPages(Pageable pageable);
 	Page<BoardResponseDTO> findClubBoardPages(Long clubId, Pageable pageable);
 
-	@Query("select b.id from BoardEntity b where b.club.id = :clubId and b.boardStatus <> :boardStatus")
+	@Query("select b.id from BoardEntity b where b.clubId = :clubId and b.boardStatus <> :boardStatus")
 	List<Long> findBoardIdListByClubId(@Param("clubId") Long clubId, @Param("boardStatus") BoardStatus boardStatus);
 }

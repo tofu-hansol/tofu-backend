@@ -77,7 +77,7 @@ public class ClubQueryStoreImpl implements ClubQueryStore {
 				ExpressionUtils.as(JPAExpressions.select(boardEntity.count())
 					.from(boardEntity)
 					.where(boardEntity.boardStatus.ne(BoardStatus.DELETED)
-						.and(boardEntity.club.id.eq(clubEntity.id))), "boardCount")
+						.and(boardEntity.clubId.eq(clubEntity.id))), "boardCount")
 			))
 			.from(clubEntity)
 			.where(clubEntity.id.eq(clubId).and(clubEntity.clubStatus.eq(ClubStatus.ACTIVATE)))
