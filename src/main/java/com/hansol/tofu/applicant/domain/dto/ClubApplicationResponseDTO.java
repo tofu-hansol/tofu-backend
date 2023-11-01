@@ -1,7 +1,6 @@
 package com.hansol.tofu.applicant.domain.dto;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.clubschedule.enums.ClubScheduleStatus;
