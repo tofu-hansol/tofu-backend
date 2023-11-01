@@ -63,7 +63,10 @@ public class BoardService {
 			.orElseThrow(() -> new BaseException(NOT_FOUND_MEMBER));
 
 		var boardEntity = boardRepository.save(boardCreationRequestDTO.toEntity(memberEntity, clubId));
-		photoService.createPhotos(boardEntity, clubPhotoRequestDTOs);
+
+		if (clubPhotoRequestDTOs != null && !clubPhotoRequestDTOs.isEmpty()) {
+			photoService.createPhotos(boardEntity, clubPhotoRequestDTOs);
+		}
 
 		return boardEntity.getId();
 	}
