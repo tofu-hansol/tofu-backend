@@ -66,8 +66,14 @@ public class ClubService {
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 
 		clubEntity.changeClubInfo(clubEditRequestDTO, categoryEntity);
-		changeBackgroundImage(clubId, backgroundImage);
-		changeProfileImage(clubId, profileImage);
+
+		if (backgroundImage != null) {
+			changeBackgroundImage(clubId, backgroundImage);
+		}
+
+		if (profileImage != null) {
+			changeProfileImage(clubId, profileImage);
+		}
 
 		return clubId;
 	}
