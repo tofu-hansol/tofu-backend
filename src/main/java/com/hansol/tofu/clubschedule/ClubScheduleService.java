@@ -37,6 +37,7 @@ public class ClubScheduleService {
 		return clubScheduleRepository.findAllByClubId(clubId).stream()
 			.filter(clubSchedule -> !clubSchedule.getClubScheduleStatus().equals(ClubScheduleStatus.DELETED))
 			.filter(clubSchedule -> clubSchedule.getEventAt().isAfter(clubSchedule.getEventAt().minusMonths(months)))
+			.sorted((o1, o2) -> o2.getEventAt().compareTo(o1.getEventAt()))
 			.collect(Collectors.toList());
 	}
 

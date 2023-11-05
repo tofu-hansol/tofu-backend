@@ -3,7 +3,6 @@ package com.hansol.tofu.club;
 import static com.hansol.tofu.error.ErrorCode.*;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +16,6 @@ import com.hansol.tofu.club.domain.dto.ClubDetailResponseDTO;
 import com.hansol.tofu.club.domain.dto.ClubEditRequestDTO;
 import com.hansol.tofu.club.domain.dto.ClubResponseDTO;
 import com.hansol.tofu.club.repository.ClubRepository;
-import com.hansol.tofu.clubmember.ClubAuthorityService;
-import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
 import com.hansol.tofu.error.BaseException;
 import com.hansol.tofu.upload.image.StorageService;
 
@@ -58,17 +55,24 @@ public class ClubService {
 		return clubRepository.save(clubEntity).getId();
 	}
 
-	public Long editClub(Long clubId, ClubEditRequestDTO clubEditRequestDTO) {
+	public Long editClub(Long clubId,
+		ClubEditRequestDTO clubEditRequestDTO,
+		MultipartFile backgroundImage,
+		MultipartFile profileImage
+	) {
 		var categoryEntity = categoryRepository.findById(clubEditRequestDTO.categoryId())
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CATEGORY));
 		var clubEntity = clubRepository.findById(clubId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 
 		clubEntity.changeClubInfo(clubEditRequestDTO, categoryEntity);
+		changeBackgroundImage(clubId, backgroundImage);
+		changeProfileImage(clubId, profileImage);
+
 		return clubId;
 	}
 
-	public Long changeBackgroundImage(Long clubId, MultipartFile backgroundImage) {
+	private Long changeBackgroundImage(Long clubId, MultipartFile backgroundImage) {
 		var clubEntity = clubRepository.findById(clubId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 
@@ -78,7 +82,7 @@ public class ClubService {
 		return clubId;
 	}
 
-	public Long changeProfileImage(Long clubId, MultipartFile profileImage) {
+	private Long changeProfileImage(Long clubId, MultipartFile profileImage) {
 		var clubEntity = clubRepository.findById(clubId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB));
 

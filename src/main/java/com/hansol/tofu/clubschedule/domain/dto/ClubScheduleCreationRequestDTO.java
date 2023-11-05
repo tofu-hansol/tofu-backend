@@ -27,7 +27,7 @@ public record ClubScheduleCreationRequestDTO(
         return ClubScheduleEntity.builder()
                 .title(this.title)
                 .placeName(this.content)
-                .eventAt(ZonedDateTime.of(this.eventAt(), ZoneId.of("Asia/Seoul")))
+                .eventAt(this.eventAt.atZone(ZoneId.of("Asia/Seoul")))
 				.latitude(this.latitude)
 				.longitude(this.longitude)
                 .club(club)
