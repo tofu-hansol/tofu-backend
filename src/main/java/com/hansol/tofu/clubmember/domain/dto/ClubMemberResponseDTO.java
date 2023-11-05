@@ -1,5 +1,6 @@
 package com.hansol.tofu.clubmember.domain.dto;
 
+import com.hansol.tofu.clubmember.enums.ClubJoinStatus;
 import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.Builder;
@@ -11,7 +12,8 @@ public record ClubMemberResponseDTO(
 	String deptName,
 	String memberName,
 	String clubRole,
-	String joinDate
+	String joinDate,
+	ClubJoinStatus clubJoinStatus
 ) {
 	@Builder
 	@QueryProjection

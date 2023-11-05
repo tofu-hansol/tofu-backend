@@ -1,6 +1,7 @@
 package com.hansol.tofu.applicant.domain.dto;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import com.hansol.tofu.clubschedule.domain.ClubScheduleEntity;
 import com.hansol.tofu.clubschedule.enums.ClubScheduleStatus;
@@ -30,7 +31,7 @@ public record ClubApplicationResponseDTO(
 		return new ClubApplicationResponseDTO(
 			clubScheduleEntity.getId(),
 			clubScheduleEntity.getTitle(),
-			clubScheduleEntity.getEventAt().toLocalDateTime(),
+			clubScheduleEntity.getEventAt().withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime(),
 			clubScheduleEntity.getClubScheduleStatus(),
 			clubScheduleEntity.getPlaceName(),
 			clubScheduleEntity.getLatitude(),

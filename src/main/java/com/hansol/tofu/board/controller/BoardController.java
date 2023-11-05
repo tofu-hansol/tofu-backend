@@ -65,7 +65,8 @@ public class BoardController {
 	// public BaseHttpResponse<?> editBoard(
 	// 	@PathVariable Long clubId,
 	// 	@PathVariable Long boardId,
-	// 	@RequestPart @Valid BoardEditRequestDTO boardEditRequestDTO) {
+	// 	@ModelAttribute @Valid BoardEditRequestDTO boardEditRequestDTO
+	// ) {
 	// 	boardService.editBoard(clubId, boardId, boardEditRequestDTO);
 	// 	return BaseHttpResponse.successWithNoContent();
 	// }

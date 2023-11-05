@@ -3,6 +3,7 @@ package com.hansol.tofu.club.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,29 +56,14 @@ public class ClubController {
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 카테고리, 존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	})
 	@IsPresident
-	@PatchMapping("/{clubId}")
-	public BaseHttpResponse<Long> editClub(@PathVariable Long clubId, @RequestBody @Valid ClubEditRequestDTO clubEditRequestDTO) {
-		return BaseHttpResponse.success(clubService.editClub(clubId, clubEditRequestDTO));
-	}
-
-	@Operation(summary = "동호회 배경사진 변경 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 배경사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@IsPresident
-	@PatchMapping("/{clubId}/background-image")
-	public BaseHttpResponse<Long> changeBackgroundImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile backgroundImage) {
-		return BaseHttpResponse.success(clubService.changeBackgroundImage(clubId, backgroundImage));
-	}
-
-	@Operation(summary = "동호회 프로필사진 변경 API", responses = {
-		@ApiResponse(responseCode = "200", description = "동호회 프로필사진 변경 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-		@ApiResponse(responseCode = "404", description = "존재하지 않는 동호회 정보", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
-	})
-	@IsPresident
-	@PatchMapping("/{clubId}/profile-image")
-	public BaseHttpResponse<Long> changeProfileImage(@PathVariable Long clubId, @RequestPart("image") MultipartFile profileImage) {
-		return BaseHttpResponse.success(clubService.changeProfileImage(clubId, profileImage));
+	@PatchMapping(value = "/{clubId}", consumes = "multipart/form-data")
+	public BaseHttpResponse<Long> editClub(
+		@PathVariable Long clubId,
+		@ModelAttribute @Valid ClubEditRequestDTO clubEditRequestDTO,
+		@RequestPart(required = false) MultipartFile backgroundImage,
+		@RequestPart(required = false) MultipartFile profileImage
+	) {
+		return BaseHttpResponse.success(clubService.editClub(clubId, clubEditRequestDTO, backgroundImage, profileImage));
 	}
 
 	@Operation(summary = "동호회 목록 조회 API", responses = {

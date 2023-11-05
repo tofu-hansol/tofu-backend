@@ -14,6 +14,8 @@ public enum ErrorCode {
 	DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다"),
 	DUPLICATE_MEMBER(HttpStatus.CONFLICT, "이미 존재하는 회원입니다"),
 	DUPLICATED_APPLICANT(HttpStatus.CONFLICT, "이미 신청한 모임입니다"),
+	ALREADY_REQUESTED_JOIN_CLUB(HttpStatus.CONFLICT, "이미 가입요청한 모임입니다"),
+	ALREADY_JOINED_CLUB(HttpStatus.CONFLICT, "이미 가입된 모임입니다"),
 	ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다"),
 
 

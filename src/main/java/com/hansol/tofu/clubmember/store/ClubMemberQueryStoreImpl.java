@@ -67,11 +67,12 @@ public class ClubMemberQueryStoreImpl implements ClubMemberQueryStore {
 					.where(memberEntity.dept.id.eq(deptEntity.id)), "deptName"),
 				memberEntity.name,
 				memberEntity.userRole.stringValue(),
-				clubMemberEntity.createdAt.stringValue()))
+				clubMemberEntity.createdAt.stringValue(),
+				clubMemberEntity.clubJoinStatus))
 			.from(clubMemberEntity)
 			.leftJoin(memberEntity)
 				.on(clubMemberEntity.member.id.eq(memberEntity.id)).fetchJoin()
-			.where(clubMemberEntity.club.id.eq(clubId).and(clubMemberEntity.clubJoinStatus.eq(ClubJoinStatus.ACCEPTED)))
+			.where(clubMemberEntity.club.id.eq(clubId).and(clubMemberEntity.clubJoinStatus.ne(ClubJoinStatus.REJECTED)))
 			.orderBy(clubMemberEntity.createdAt.desc())
 			.fetch().stream().distinct().toList();
 	}
