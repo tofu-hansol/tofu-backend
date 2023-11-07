@@ -63,6 +63,7 @@ public class ClubQueryStoreImpl implements ClubQueryStore {
 	public Optional<ClubDetailResponseDTO> findClubDetail(Long clubId) {
 		return Optional.ofNullable(queryFactory
 			.select(new QClubDetailResponseDTO(
+				clubEntity.category.id,
 				clubEntity.id,
 				clubEntity.name,
 				clubEntity.profileUrl,

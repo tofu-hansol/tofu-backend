@@ -5,12 +5,13 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 
 public record ClubDetailResponseDTO(
+	Long categoryId,
 	Long clubId,
 	String name,
 	String clubProfileUrl,
 	String clubBackgroundUrl,
 	String description,
-	int fee,
+	Integer fee,
 	String accountNumber,
 	long memberCount,
 	long boardCount

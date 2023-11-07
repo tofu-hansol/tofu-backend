@@ -74,6 +74,9 @@ public class ClubController {
 		return BaseHttpResponse.success(clubService.getClubListBy(categoryId, pageable));
 	}
 
+	@Operation(summary = "동호회 상세 조회 API", responses = {
+		@ApiResponse(responseCode = "200", description = "동호회 상세 조회 성공", content = @Content(schema = @Schema(implementation = Long.class))),
+	})
 	@GetMapping("/{clubId}")
 	public BaseHttpResponse<ClubDetailResponseDTO> getClubDetail(@PathVariable Long clubId) {
 		return BaseHttpResponse.success(clubService.getClubDetail(clubId));
