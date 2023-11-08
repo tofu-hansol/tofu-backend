@@ -13,7 +13,7 @@ public record ClubCreationRequestDTO(
 	String name,
 	String description,
 	String accountNumber,
-	int fee,
+	Integer fee,
 	Long categoryId
 ) {
 	@Builder

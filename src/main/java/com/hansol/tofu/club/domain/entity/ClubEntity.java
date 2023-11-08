@@ -39,7 +39,7 @@ public class ClubEntity extends TimeEntity {
     private String accountNumber;
 
 	@ColumnDefault("0")
-    private int fee;
+    private Integer fee;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

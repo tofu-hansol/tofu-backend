@@ -5,7 +5,7 @@ import lombok.Builder;
 public record ClubEditRequestDTO(
 	String description,
 	String accountNumber,
-	int fee,
+	Integer fee,
 	Long categoryId
 ) {
 	@Builder
