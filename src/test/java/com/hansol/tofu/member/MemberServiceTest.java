@@ -1,19 +1,5 @@
 package com.hansol.tofu.member;
 
-import static com.hansol.tofu.error.ErrorCode.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.hansol.tofu.config.security.SecurityConfig;
 import com.hansol.tofu.dept.domain.DeptEntity;
 import com.hansol.tofu.dept.repository.DeptRepository;
 import com.hansol.tofu.error.BaseException;
@@ -23,6 +9,19 @@ import com.hansol.tofu.member.domain.dto.MemberJoinRequestDTO;
 import com.hansol.tofu.member.repository.MemberRepository;
 import com.hansol.tofu.mock.WithMockCustomUser;
 import com.hansol.tofu.upload.image.StorageService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
+
+import static com.hansol.tofu.error.ErrorCode.DUPLICATE_MEMBER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration
@@ -126,21 +125,6 @@ class MemberServiceTest {
 
         assertEquals(memberEntity.getProfileUrl(), "http://image.com/testImage");
         verify(storageService).uploadImage(profileImage, "images/member/");
-	}
-
-	@Test
-	@WithMockCustomUser(username = "lisa@test.com")
-	void getMyProfile_내_프로필_정보를_가져온다() {
-		// var memberEntity = MemberEntity.builder().
-		// 	.
-		// 	build();
-		// when(memberRepository.findById(1L)).thenReturn(Optional.of(memberEntity));
-		//
-		//
-		// sut.getMyProfile();
-		//
-		//
-		// verify(memberRepository).findById(1L);
 	}
 
 

@@ -17,8 +17,8 @@ public class QuerydslConfig {
 
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
-		// FIX: transform Error : Handler dispatch failed: java.lang.NoSuchMethodError: 'java.lang.Object org.hibernate.ScrollableResults.get(int)
-		// solve: https://velog.io/@dktlsk6/QueryDSL-transform-%EC%97%90%EB%9F%AC
+		// Problem: transform Error : Handler dispatch failed: java.lang.NoSuchMethodError: 'java.lang.Object org.hibernate.ScrollableResults.get(int)
+		// solve(Reference): https://velog.io/@dktlsk6/QueryDSL-transform-%EC%97%90%EB%9F%AC
         return new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
     }
 }

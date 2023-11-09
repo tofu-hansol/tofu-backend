@@ -1,23 +1,20 @@
 package com.hansol.tofu.clubphoto;
 
-import static com.hansol.tofu.error.ErrorCode.*;
-
-import java.sql.SQLException;
-import java.util.List;
-
+import com.hansol.tofu.board.domain.entity.BoardEntity;
+import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
+import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
+import com.hansol.tofu.clubphoto.repository.ClubPhotoRepository;
+import com.hansol.tofu.error.BaseException;
+import com.hansol.tofu.upload.image.StorageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hansol.tofu.board.domain.entity.BoardEntity;
-import com.hansol.tofu.clubphoto.domain.ClubPhotoEntity;
-import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoRequestDTO;
-import com.hansol.tofu.clubphoto.domain.dto.ClubPhotoResponseDTO;
-import com.hansol.tofu.clubphoto.repository.ClubPhotoRepository;
-import com.hansol.tofu.error.BaseException;
-import com.hansol.tofu.upload.image.StorageService;
+import java.sql.SQLException;
+import java.util.List;
 
-import lombok.RequiredArgsConstructor;
+import static com.hansol.tofu.error.ErrorCode.NOT_FOUND_CLUB_PHOTO;
 
 @Service
 @RequiredArgsConstructor

@@ -29,7 +29,6 @@ public class AuthService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    // TODO: ClubMemberService 만들어서 풀기
     private final MemberService memberService;
     private final EmailVerificationService emailVerificationService;
     private final PasswordEncoder passwordEncoder;

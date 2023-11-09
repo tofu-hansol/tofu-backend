@@ -107,8 +107,10 @@ class ClubAuthorityServiceTest {
 		when(clubMemberRepository.findByClubIdAndMemberId(clubEntity.getId(), memberEntity.getId()))
 			.thenReturn(Optional.of(clubMemberEntity));
 
+
 		sut.rejectJoinClub(clubEntity.getId(), memberEntity.getId());
 
-		assertEquals(clubMemberEntity.getClubJoinStatus(), ClubJoinStatus.REJECTED);
+
+		verify(clubMemberRepository).deleteById(clubMemberEntity.getId());
 	}
 }

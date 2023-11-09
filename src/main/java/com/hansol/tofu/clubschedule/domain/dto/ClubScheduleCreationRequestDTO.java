@@ -8,7 +8,6 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 public record ClubScheduleCreationRequestDTO(
         @NotBlank(message = "제목을 입력해주세요")
@@ -26,7 +25,7 @@ public record ClubScheduleCreationRequestDTO(
     public ClubScheduleEntity toEntity(ClubEntity club) {
         return ClubScheduleEntity.builder()
                 .title(this.title)
-                .placeName(this.content)
+                .content(this.content)
                 .eventAt(this.eventAt.atZone(ZoneId.of("Asia/Seoul")))
 				.latitude(this.latitude)
 				.longitude(this.longitude)

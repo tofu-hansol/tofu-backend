@@ -1,32 +1,12 @@
 package com.hansol.tofu.board.domain.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-
 import com.hansol.tofu.board.enums.BoardStatus;
-import com.hansol.tofu.club.domain.entity.ClubEntity;
 import com.hansol.tofu.global.TimeEntity;
 import com.hansol.tofu.member.domain.MemberEntity;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
@@ -52,10 +32,6 @@ public class BoardEntity extends TimeEntity {
 	@Column(name = "status", nullable = false)
 	@ColumnDefault("PUBLISHED")
 	private BoardStatus boardStatus;
-
-	// @JoinColumn(name = "club_id")
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// private ClubEntity club;
 
 	@Column(name = "club_id", nullable = false)
 	private Long clubId;

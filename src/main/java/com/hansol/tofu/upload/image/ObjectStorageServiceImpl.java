@@ -53,10 +53,6 @@ public class ObjectStorageServiceImpl implements StorageService {
     public void getBuckets() {
         try {
             List<Bucket> buckets = amazonS3.listBuckets();
-            System.out.println("Bucket List: ");
-            for (Bucket bucket : buckets) {
-                System.out.println("    name=" + bucket.getName() + ", creation_date=" + bucket.getCreationDate() + ", owner=" + bucket.getOwner().getId());
-            }
         } catch (SdkClientException e) {
             e.printStackTrace();
         }
@@ -83,7 +79,6 @@ public class ObjectStorageServiceImpl implements StorageService {
        }
     }
 
-    // ========== internal use ========== //
     private String createFilename(String originalFilename) {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFilename));
     }
