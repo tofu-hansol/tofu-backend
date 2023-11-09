@@ -56,10 +56,10 @@ public class BoardController {
 
 	// FIXME: [2023-11-09] 프론트와 논의 필요
 	// @Operation(summary = "동호회 게시글 수정 API", responses = {
-	// 	@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-	// 	@ApiResponse(responseCode = "400", description = "입력정보 누락(제목, 내용)", content = @Content(schema = @Schema(implementation = Long.class))),
-	// 	@ApiResponse(responseCode = "403", description = "본인이 아닌 다른 회원 게시글 수정 시도", content = @Content(schema = @Schema(implementation = Long.class))),
-	// 	@ApiResponse(responseCode = "404", description = "존재하지 않는 게시글", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
+	// 	@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", placeName = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "400", description = "입력정보 누락(제목, 내용)", placeName = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "403", description = "본인이 아닌 다른 회원 게시글 수정 시도", placeName = @Content(schema = @Schema(implementation = Long.class))),
+	// 	@ApiResponse(responseCode = "404", description = "존재하지 않는 게시글", placeName = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),
 	// })
 	// @IsMember
 	// @PatchMapping("/{clubId}/boards/{boardId}")

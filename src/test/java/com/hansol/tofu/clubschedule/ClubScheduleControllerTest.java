@@ -43,7 +43,7 @@ public class ClubScheduleControllerTest {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().plusHours(1L))
                 .title("한솔두부")
-                .content("한솔두부모임")
+                .placeName("두부장소이름")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();
@@ -61,7 +61,7 @@ public class ClubScheduleControllerTest {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().minusHours(1))
                 .title("한솔두부")
-                .content("한솔두부모임")
+                .placeName("두부장소")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();
@@ -81,7 +81,7 @@ public class ClubScheduleControllerTest {
         var clubScheduleEditRequestDTO = ClubScheduleEditRequestDTO.builder()
                 .eventAt(newEventAt)
                 .title("변경된한솔두부모임")
-                .content("변경된한솔두부모임입니다")
+                .placeName("변경된두부장소")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();

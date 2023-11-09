@@ -45,7 +45,7 @@ public class ClubScheduleServiceTest {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().plusHours(1L))
                 .title("한솔두부모임")
-                .content("한솔두부모임입니다")
+                .placeName("두부장소")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();
@@ -65,7 +65,7 @@ public class ClubScheduleServiceTest {
         var clubScheduleCreationRequestDTO = ClubScheduleCreationRequestDTO.builder()
                 .eventAt(LocalDateTime.now().plusHours(1L))
                 .title("한솔두부모임")
-                .content("한솔두부모임입니다")
+				.placeName("두부장소")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();
@@ -84,14 +84,14 @@ public class ClubScheduleServiceTest {
         var clubScheduleEditRequestDTO = ClubScheduleEditRequestDTO.builder()
                 .eventAt(newEventAt)
                 .title("변경된한솔두부모임")
-                .content("변경된한솔두부모임입니다")
+				.placeName("변경된두부장소")
 				.latitude(37.123456)
 				.longitude(127.123456)
                 .build();
         var clubScheduleEntity = ClubScheduleEntity.builder()
                 .eventAt(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")))
                 .title("한솔두부모임")
-                .content("한솔두부모임입니다")
+				.placeName("두부장소")
 				.latitude(11.111111)
 				.longitude(22.222222)
                 .build();
@@ -103,7 +103,7 @@ public class ClubScheduleServiceTest {
 
         assertEquals(ZonedDateTime.of(clubScheduleEditRequestDTO.eventAt(), ZoneId.of("Asia/Seoul")), clubScheduleEntity.getEventAt());
         assertEquals(clubScheduleEditRequestDTO.title(), clubScheduleEntity.getTitle());
-        assertEquals(clubScheduleEditRequestDTO.content(), clubScheduleEntity.getContent());
+        assertEquals(clubScheduleEditRequestDTO.placeName(), clubScheduleEntity.getPlaceName());
 		assertEquals(clubScheduleEditRequestDTO.latitude(), clubScheduleEntity.getLatitude());
 		assertEquals(clubScheduleEditRequestDTO.longitude(), clubScheduleEntity.getLongitude());
     }
@@ -114,7 +114,7 @@ public class ClubScheduleServiceTest {
                 .id(2L)
                 .eventAt(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")))
                 .title("한솔두부모임")
-                .content("한솔두부모임입니다")
+				.placeName("두부장소")
                 .clubScheduleStatus(ClubScheduleStatus.RECRUITING)
                 .build();
         when(clubScheduleRepository.findById(2L)).thenReturn(Optional.of(clubScheduleEntity));
