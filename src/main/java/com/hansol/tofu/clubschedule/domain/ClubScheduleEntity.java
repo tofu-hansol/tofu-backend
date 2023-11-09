@@ -31,8 +31,8 @@ public class ClubScheduleEntity extends TimeEntity {
 	@Column(nullable = false)
 	private String title;
 
-	@Column(nullable = false)
-	private String content;
+	@Column(name = "place_name",  nullable = false)
+	private String placeName;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
@@ -50,7 +50,7 @@ public class ClubScheduleEntity extends TimeEntity {
 
 	public void changeClubSchedule(ClubScheduleEditRequestDTO clubSchedule) {
 		this.title = clubSchedule.title();
-		this.content = clubSchedule.content();
+		this.placeName = clubSchedule.placeName();
 		this.eventAt = ZonedDateTime.of(clubSchedule.eventAt(), ZoneId.of("Asia/Seoul"));
 		this.latitude = clubSchedule.latitude();
 		this.longitude = clubSchedule.longitude();

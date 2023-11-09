@@ -12,7 +12,7 @@ import java.time.ZoneId;
 public record ClubScheduleCreationRequestDTO(
         @NotBlank(message = "제목을 입력해주세요")
         String title,
-        String content,
+        String placeName,
         @Future(message = "현재 시간 이후의 일정만 등록할 수 있습니다")
         LocalDateTime eventAt,
 		Double latitude,
@@ -25,7 +25,7 @@ public record ClubScheduleCreationRequestDTO(
     public ClubScheduleEntity toEntity(ClubEntity club) {
         return ClubScheduleEntity.builder()
                 .title(this.title)
-                .content(this.content)
+                .placeName(this.placeName)
                 .eventAt(this.eventAt.atZone(ZoneId.of("Asia/Seoul")))
 				.latitude(this.latitude)
 				.longitude(this.longitude)

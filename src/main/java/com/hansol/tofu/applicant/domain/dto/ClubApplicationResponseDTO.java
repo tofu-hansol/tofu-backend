@@ -33,7 +33,7 @@ public record ClubApplicationResponseDTO(
 			clubScheduleEntity.getTitle(),
 			clubScheduleEntity.getEventAt().withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime(),
 			clubScheduleEntity.getClubScheduleStatus(),
-			clubScheduleEntity.getContent(),
+			clubScheduleEntity.getPlaceName(),
 			clubScheduleEntity.getLatitude(),
 			clubScheduleEntity.getLongitude(),
 			applicants
