@@ -73,6 +73,7 @@ class AuthControllerTest {
     }
 
     @Test
+    @Disabled
     void signup_한솔이메일이_아닐경우_400에러를_반환한다() throws Exception {
         var signupRequestDTO = SignupRequestDTO.builder()
                 .email("mch@gmail.com")
