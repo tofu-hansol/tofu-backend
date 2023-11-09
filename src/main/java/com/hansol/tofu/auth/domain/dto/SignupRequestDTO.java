@@ -10,8 +10,8 @@ import lombok.Builder;
 public record SignupRequestDTO(
 
 
-        //@Email(message = "이메일 형식이 올바르지 않습니다.")
-        @Email(regexp = "^[a-zA-Z0-9._%+-]+@hansol\\.com$", message = "한솔그룹 이메일만 가능합니다")
+        @Email(message = "이메일 형식이 올바르지 않습니다.")
+//        @Email(regexp = "^[a-zA-Z0-9._%+-]+@hansol\\.com$", message = "한솔그룹 이메일만 가능합니다")
         @Schema(description = "이메일")
         String email,
 
