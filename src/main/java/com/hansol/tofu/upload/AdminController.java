@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
 	@GetMapping
-	@Operation(summary = "Admin Test 문자열 출력 API")
+	@Operation(summary = "Admin Test 문자열 출력 API-v1110:1258")
 	public BaseHttpResponse<String> printTest() {
 		return BaseHttpResponse.success("테스트 API");
 	}
