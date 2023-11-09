@@ -38,7 +38,6 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 
 	private final JPAQueryFactory queryFactory;
 
-	// TOD
 	@Override
 	public Page<BoardResponseDTO> findFeaturedBoardPages(Pageable pageable) {
 		Map<BoardEntity, List<ClubPhotoEntity>> transform = queryFactory
@@ -88,8 +87,8 @@ public class BoardQueryStoreImpl implements BoardQueryStore {
 	public Page<BoardResponseDTO> findClubBoardPages(Long clubId, Pageable pageable) {
 		QCommentEntity commentEntity = new QCommentEntity("commentEntity");
 
-		// TODO: https://okky.kr/questions/1079343
-		// TODO: https://jojoldu.tistory.com/529
+		// TODO(reference): https://okky.kr/questions/1079343
+		// TODO(reference): https://jojoldu.tistory.com/529
 		List<Long> ids = queryFactory.select(boardEntity.id)
 			.from(boardEntity)
 			.where(boardEntity.clubId.eq(clubId).and(boardEntity.boardStatus.ne(BoardStatus.DELETED)))

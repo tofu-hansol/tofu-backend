@@ -24,7 +24,6 @@ public class ClubScheduleController {
 
     private final ClubScheduleService clubScheduleService;
 
-
     @Operation(summary = "모임일정 추가 API", responses = {
             @ApiResponse(responseCode = "200", description = "모임일정 추가 성공", content = @Content(schema = @Schema(implementation = Long.class))),
             @ApiResponse(responseCode = "400", description = "요청값 에러", content = @Content(schema = @Schema(implementation = BaseHttpResponse.class))),

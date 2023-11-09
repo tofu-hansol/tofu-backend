@@ -1,7 +1,6 @@
 package com.hansol.tofu.board;
 
 import com.hansol.tofu.board.domain.dto.BoardCreationRequestDTO;
-import com.hansol.tofu.board.domain.dto.BoardEditRequestDTO;
 import com.hansol.tofu.board.domain.entity.BoardEntity;
 import com.hansol.tofu.board.enums.BoardStatus;
 import com.hansol.tofu.board.repository.BoardRepository;
@@ -60,34 +59,6 @@ class BoardServiceTest {
 
         verify(boardRepository, times(1)).save(boardEntity);
     }
-
-    // @Test
-	// @Disabled
-    // @WithMockCustomUser(username = "lisa@test.com")
-    // void editBoard_동호회_게시글_변경에_성공한다() throws Exception {
-    //     Long memberId = 1L;
-    //     Long boardId = 22L;
-    //     Long memberAsClubId = 3L;
-    //     var memberEntity = MemberEntity.builder().id(memberId).build();
-    //     var boardCreationRequestDTO = BoardEditRequestDTO.builder()
-    //             .title("변경된 제목")
-    //             .content("변경된 내용")
-    //             .build();
-    //     var boardEntity = BoardEntity.builder()
-    //             .id(boardId)
-    //             .title("제목")
-    //             .content("내용")
-    //             .member(memberEntity)
-    //             .build();
-    //     when(boardRepository.findById(boardEntity.getId())).thenReturn(Optional.of(boardEntity));
-	//
-	//
-    //     sut.editBoard(memberAsClubId, boardId, boardCreationRequestDTO);
-	//
-	//
-    //     assertEquals(boardCreationRequestDTO.title(), boardEntity.getTitle());
-    //     assertEquals(boardCreationRequestDTO.content(), boardEntity.getContent());
-    // }
 
     @Test
     @WithMockCustomUser(username = "lisa@test.com")

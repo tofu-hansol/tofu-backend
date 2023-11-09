@@ -31,7 +31,7 @@ public class ClubQueryStoreImpl implements ClubQueryStore {
 
 	private final JPAQueryFactory queryFactory;
 
-	/* TODO: https://nomoreft.tistory.com/45 */
+	/* TODO(Reference): https://nomoreft.tistory.com/45 */
 	@Override
 	public Page<ClubResponseDTO> findClubListBy(/* ClubSearchCondition condition */Long categoryId, Pageable pageable) {
 		var clubEntities = queryFactory.select(new QClubResponseDTO(

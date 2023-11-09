@@ -102,7 +102,7 @@ public class ClubAuthorityService {
 	public Long rejectJoinClub(Long clubId, Long memberId) {
 		var clubMemberEntity = clubMemberRepository.findByClubIdAndMemberId(clubId, memberId)
 			.orElseThrow(() -> new BaseException(NOT_FOUND_CLUB_MEMBER));
-		clubMemberEntity.reject();
+		clubMemberRepository.deleteById(clubMemberEntity.getId());
 
 		return clubMemberEntity.getId();
 	}

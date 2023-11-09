@@ -54,6 +54,7 @@ public class BoardController {
 		return BaseHttpResponse.success(boardService.addBoard(clubId, boardCreationRequestDTO, clubPhotoRequestDTOList));
 	}
 
+	// FIXME: [2023-11-09] 프론트와 논의 필요
 	// @Operation(summary = "동호회 게시글 수정 API", responses = {
 	// 	@ApiResponse(responseCode = "200", description = "동호회 게시글 수정 성공", content = @Content(schema = @Schema(implementation = Long.class))),
 	// 	@ApiResponse(responseCode = "400", description = "입력정보 누락(제목, 내용)", content = @Content(schema = @Schema(implementation = Long.class))),
