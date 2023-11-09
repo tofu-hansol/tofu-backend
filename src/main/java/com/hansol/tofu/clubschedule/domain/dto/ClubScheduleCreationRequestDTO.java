@@ -12,6 +12,7 @@ import java.time.ZoneId;
 public record ClubScheduleCreationRequestDTO(
         @NotBlank(message = "제목을 입력해주세요")
         String title,
+		@NotBlank(message = "장소명을 입력해주세요")
         String placeName,
         @Future(message = "현재 시간 이후의 일정만 등록할 수 있습니다")
         LocalDateTime eventAt,
